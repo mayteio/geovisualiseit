@@ -1,0 +1,14 @@
+{
+    "trigger": true,
+    "modules": [
+        "add-to-group"
+    ],
+    "parentResource": "visualiseit903c3202903c3202",
+    "functionName": "visualiseit903c3202903c3202PostConfirmation",
+    "parentStack": "auth",
+    "triggerEnvs": "[]",
+    "triggerTemplate": "PostConfirmation.json.ejs",
+    "roleName": "visualiseit903c3202903c3202PostConfirmation",
+    "skipEdit": true,
+    "resourceName": "visualiseit903c3202903c3202PostConfirmation"
+}

@@ -1,0 +1,11 @@
+{
+    "AppSyncApiName": "visualiseit",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": "false",
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authvisualiseit903c3202903c3202",
+            "Outputs.UserPoolId"
+        ]
+    }
+}

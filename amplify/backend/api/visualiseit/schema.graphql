@@ -1,0 +1,110 @@
+type Profile
+  @model
+  @auth(
+    rules: [
+      { allow: owner }
+      { allow: groups, groups: ["Admin"] }
+      { allow: public, operations: [read] }
+    ]
+  ) {
+  id: ID!
+  title: String!
+  visualisations: [Visualisation] @connection(name: "ProfileVisualisations")
+}
+
+type Visualisation
+  @model
+  @auth(
+    rules: [
+      { allow: owner }
+      { allow: groups, groups: ["Admin"] }
+      { allow: public, operations: [read] }
+    ]
+  ) {
+  id: ID!
+  title: String!
+  description: String
+  config: Config
+  profile: Profile @connection(name: "ProfileVisualisations")
+  datasets: [Dataset]!
+  mapState: MapState
+  image: S3Object
+  private: Boolean
+  location: Location
+
+  # future features
+  # comments: [Comment] @connection(name: "VisualisationComments")
+  # tags: [VisualisationTags] @connection(name: "VisualisationTags")
+}
+
+# Unsure how to do many to many with tags
+# See many-to-many: https://aws-amplify.github.io/docs/cli-toolchain/graphql#usage-2
+
+# type Tag
+# @model
+# @auth(rules: [
+#   { allow: owner, operations: [create] }
+#   { allow: groups, groups: ["Admin"] }
+#   { allow: public, operations: [read] }
+# ])
+# {
+#   id: ID!
+#   title: String!
+# }
+
+type Location
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [create] }
+      { allow: public, operations: [read] }
+      { allow: groups, groups: ["Admin"] }
+    ]
+  ) {
+  name: String!
+  country: String!
+  latlng: LatLng
+}
+
+# think more about this - datasets are public I guess so they should get public access if coming via another model
+# https://stackoverflow.com/questions/59380694/in-an-appsync-graphql-transform-can-i-set-an-auth-rule-authstrategy-based-on-a
+# https://docs.aws.amazon.com/appsync/latest/devguide/security-authorization-use-cases.html
+# https://hackernoon.com/graphql-authorization-with-multiple-data-sources-using-aws-appsync-dfae2e350bf2
+
+type Dataset
+  @model
+  @auth(
+    rules: [
+      { allow: owner }
+      { allow: groups, groups: ["Admin"] }
+      { allow: public, operations: [read] }
+    ]
+  ) {
+  id: ID!
+  title: String!
+  json: S3Object!
+}
+
+type LatLng {
+  latitude: Float!
+  longitude: Float!
+}
+
+type Config {
+  visualisationId: ID!
+  json: S3Object!
+}
+
+type S3Object {
+  bucket: String
+  key: String
+  region: String
+}
+
+type MapState {
+  latitude: Float!
+  longitude: Float!
+  zoom: Float!
+  bearing: Float
+  pitch: Float
+}
