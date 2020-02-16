@@ -31,64 +31,11 @@ export const getProfile = /* GraphQL */ `
           id
           title
           description
-          private
+          password
           owner
         }
         nextToken
       }
-    }
-  }
-`;
-export const getVisualisation = /* GraphQL */ `
-  query GetVisualisation($id: ID!) {
-    getVisualisation(id: $id) {
-      id
-      title
-      description
-      config {
-        visualisationId
-        json {
-          bucket
-          key
-          region
-        }
-      }
-      datasets {
-        id
-        title
-        json {
-          bucket
-          key
-          region
-        }
-        owner
-      }
-      mapState {
-        latitude
-        longitude
-        zoom
-        bearing
-        pitch
-      }
-      private
-      location {
-        name
-        country
-        latlng {
-          latitude
-          longitude
-        }
-        owner
-      }
-      profile {
-        id
-        title
-        owner
-        visualisations {
-          nextToken
-        }
-      }
-      owner
     }
   }
 `;
@@ -103,35 +50,77 @@ export const listVisualisations = /* GraphQL */ `
         id
         title
         description
-        config {
-          visualisationId
-        }
         datasets {
           id
           title
           owner
         }
-        mapState {
-          latitude
-          longitude
-          zoom
-          bearing
-          pitch
+        image {
+          bucket
+          key
+          region
         }
-        private
-        location {
-          name
-          country
-          owner
-        }
+        password
         profile {
           id
           title
           owner
         }
         owner
+        config {
+          owner
+        }
       }
       nextToken
+    }
+  }
+`;
+export const getVisualisation = /* GraphQL */ `
+  query GetVisualisation($id: ID!) {
+    getVisualisation(id: $id) {
+      id
+      title
+      description
+      datasets {
+        id
+        title
+        file {
+          bucket
+          key
+          region
+        }
+        owner
+      }
+      image {
+        bucket
+        key
+        region
+      }
+      password
+      profile {
+        id
+        title
+        owner
+        visualisations {
+          nextToken
+        }
+      }
+      owner
+      config {
+        file {
+          bucket
+          key
+          region
+        }
+        visualisation {
+          id
+          title
+          description
+          password
+          owner
+        }
+        owner
+      }
     }
   }
 `;
@@ -173,7 +162,7 @@ export const getDataset = /* GraphQL */ `
     getDataset(id: $id) {
       id
       title
-      json {
+      file {
         bucket
         key
         region
@@ -192,7 +181,7 @@ export const listDatasets = /* GraphQL */ `
       items {
         id
         title
-        json {
+        file {
           bucket
           key
           region
@@ -200,6 +189,69 @@ export const listDatasets = /* GraphQL */ `
         owner
       }
       nextToken
+    }
+  }
+`;
+export const listConfigs = /* GraphQL */ `
+  query ListConfigs(
+    $filter: ModelConfigFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listConfigs(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        file {
+          bucket
+          key
+          region
+        }
+        visualisation {
+          id
+          title
+          description
+          password
+          owner
+        }
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getConfig = /* GraphQL */ `
+  query GetConfig($id: ID!) {
+    getConfig(id: $id) {
+      file {
+        bucket
+        key
+        region
+      }
+      visualisation {
+        id
+        title
+        description
+        datasets {
+          id
+          title
+          owner
+        }
+        image {
+          bucket
+          key
+          region
+        }
+        password
+        profile {
+          id
+          title
+          owner
+        }
+        owner
+        config {
+          owner
+        }
+      }
+      owner
     }
   }
 `;

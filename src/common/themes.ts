@@ -14,6 +14,9 @@ export const muiTheme = createMuiTheme({
       primary: '#F3EFF5',
     },
   },
+  shape: {
+    borderRadius: 0,
+  },
   typography: {
     fontFamily: [
       'Inconsolata',

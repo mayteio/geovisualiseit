@@ -24,15 +24,16 @@ type Visualisation
   id: ID!
   title: String!
   description: String
-  config: Config
   profile: Profile @connection(name: "ProfileVisualisations")
+  config: Config @connection(name: "VisualisationConfig")
   datasets: [Dataset]!
-  mapState: MapState
   image: S3Object
-  private: Boolean
-  location: Location
+
+  password: String
 
   # future features
+  # mapState: MapState
+  # location: Location
   # comments: [Comment] @connection(name: "VisualisationComments")
   # tags: [VisualisationTags] @connection(name: "VisualisationTags")
 }
@@ -82,7 +83,7 @@ type Dataset
   ) {
   id: ID!
   title: String!
-  json: S3Object!
+  file: S3Object!
 }
 
 type LatLng {
@@ -90,9 +91,17 @@ type LatLng {
   longitude: Float!
 }
 
-type Config {
-  visualisationId: ID!
-  json: S3Object!
+type Config
+  @model
+  @auth(
+    rules: [
+      { allow: owner }
+      { allow: groups, groups: ["Admin"] }
+      { allow: public, operations: [read] }
+    ]
+  ) {
+  visualisation: Visualisation @connection(name: "VisualisationConfig")
+  file: S3Object!
 }
 
 type S3Object {

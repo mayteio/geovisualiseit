@@ -2,6 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export interface AppState {
   loginDialogOpen: boolean;
+  signupDialogOpen: boolean;
+  editorDialogOpen: boolean;
 }
 
 const { actions, reducer } = createSlice({
@@ -9,6 +11,7 @@ const { actions, reducer } = createSlice({
   initialState: {
     loginDialogOpen: false,
     signupDialogOpen: false,
+    editorDialogOpen: false,
   },
   reducers: {
     setLoginOpen: (state, action) => {
@@ -17,8 +20,11 @@ const { actions, reducer } = createSlice({
     setSignupOpen: (state, action) => {
       state.signupDialogOpen = action.payload;
     },
+    setEditorOpen: (state, action) => {
+      state.editorDialogOpen = action.payload;
+    },
   },
 });
 
 export const appReducer = reducer;
-export const { setLoginOpen, setSignupOpen } = actions;
+export const { setLoginOpen, setSignupOpen, setEditorOpen } = actions;

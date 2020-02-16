@@ -12,7 +12,7 @@ export const onCreateProfile = /* GraphQL */ `
           id
           title
           description
-          private
+          password
           owner
         }
         nextToken
@@ -31,7 +31,7 @@ export const onUpdateProfile = /* GraphQL */ `
           id
           title
           description
-          private
+          password
           owner
         }
         nextToken
@@ -50,7 +50,7 @@ export const onDeleteProfile = /* GraphQL */ `
           id
           title
           description
-          private
+          password
           owner
         }
         nextToken
@@ -64,41 +64,22 @@ export const onCreateVisualisation = /* GraphQL */ `
       id
       title
       description
-      config {
-        visualisationId
-        json {
-          bucket
-          key
-          region
-        }
-      }
       datasets {
         id
         title
-        json {
+        file {
           bucket
           key
           region
         }
         owner
       }
-      mapState {
-        latitude
-        longitude
-        zoom
-        bearing
-        pitch
+      image {
+        bucket
+        key
+        region
       }
-      private
-      location {
-        name
-        country
-        latlng {
-          latitude
-          longitude
-        }
-        owner
-      }
+      password
       profile {
         id
         title
@@ -108,6 +89,21 @@ export const onCreateVisualisation = /* GraphQL */ `
         }
       }
       owner
+      config {
+        file {
+          bucket
+          key
+          region
+        }
+        visualisation {
+          id
+          title
+          description
+          password
+          owner
+        }
+        owner
+      }
     }
   }
 `;
@@ -117,41 +113,22 @@ export const onUpdateVisualisation = /* GraphQL */ `
       id
       title
       description
-      config {
-        visualisationId
-        json {
-          bucket
-          key
-          region
-        }
-      }
       datasets {
         id
         title
-        json {
+        file {
           bucket
           key
           region
         }
         owner
       }
-      mapState {
-        latitude
-        longitude
-        zoom
-        bearing
-        pitch
+      image {
+        bucket
+        key
+        region
       }
-      private
-      location {
-        name
-        country
-        latlng {
-          latitude
-          longitude
-        }
-        owner
-      }
+      password
       profile {
         id
         title
@@ -161,6 +138,21 @@ export const onUpdateVisualisation = /* GraphQL */ `
         }
       }
       owner
+      config {
+        file {
+          bucket
+          key
+          region
+        }
+        visualisation {
+          id
+          title
+          description
+          password
+          owner
+        }
+        owner
+      }
     }
   }
 `;
@@ -170,41 +162,22 @@ export const onDeleteVisualisation = /* GraphQL */ `
       id
       title
       description
-      config {
-        visualisationId
-        json {
-          bucket
-          key
-          region
-        }
-      }
       datasets {
         id
         title
-        json {
+        file {
           bucket
           key
           region
         }
         owner
       }
-      mapState {
-        latitude
-        longitude
-        zoom
-        bearing
-        pitch
+      image {
+        bucket
+        key
+        region
       }
-      private
-      location {
-        name
-        country
-        latlng {
-          latitude
-          longitude
-        }
-        owner
-      }
+      password
       profile {
         id
         title
@@ -214,6 +187,21 @@ export const onDeleteVisualisation = /* GraphQL */ `
         }
       }
       owner
+      config {
+        file {
+          bucket
+          key
+          region
+        }
+        visualisation {
+          id
+          title
+          description
+          password
+          owner
+        }
+        owner
+      }
     }
   }
 `;
@@ -261,7 +249,7 @@ export const onCreateDataset = /* GraphQL */ `
     onCreateDataset(owner: $owner) {
       id
       title
-      json {
+      file {
         bucket
         key
         region
@@ -275,7 +263,7 @@ export const onUpdateDataset = /* GraphQL */ `
     onUpdateDataset(owner: $owner) {
       id
       title
-      json {
+      file {
         bucket
         key
         region
@@ -289,10 +277,121 @@ export const onDeleteDataset = /* GraphQL */ `
     onDeleteDataset(owner: $owner) {
       id
       title
-      json {
+      file {
         bucket
         key
         region
+      }
+      owner
+    }
+  }
+`;
+export const onCreateConfig = /* GraphQL */ `
+  subscription OnCreateConfig($owner: String) {
+    onCreateConfig(owner: $owner) {
+      file {
+        bucket
+        key
+        region
+      }
+      visualisation {
+        id
+        title
+        description
+        datasets {
+          id
+          title
+          owner
+        }
+        image {
+          bucket
+          key
+          region
+        }
+        password
+        profile {
+          id
+          title
+          owner
+        }
+        owner
+        config {
+          owner
+        }
+      }
+      owner
+    }
+  }
+`;
+export const onUpdateConfig = /* GraphQL */ `
+  subscription OnUpdateConfig($owner: String) {
+    onUpdateConfig(owner: $owner) {
+      file {
+        bucket
+        key
+        region
+      }
+      visualisation {
+        id
+        title
+        description
+        datasets {
+          id
+          title
+          owner
+        }
+        image {
+          bucket
+          key
+          region
+        }
+        password
+        profile {
+          id
+          title
+          owner
+        }
+        owner
+        config {
+          owner
+        }
+      }
+      owner
+    }
+  }
+`;
+export const onDeleteConfig = /* GraphQL */ `
+  subscription OnDeleteConfig($owner: String) {
+    onDeleteConfig(owner: $owner) {
+      file {
+        bucket
+        key
+        region
+      }
+      visualisation {
+        id
+        title
+        description
+        datasets {
+          id
+          title
+          owner
+        }
+        image {
+          bucket
+          key
+          region
+        }
+        password
+        profile {
+          id
+          title
+          owner
+        }
+        owner
+        config {
+          owner
+        }
       }
       owner
     }
