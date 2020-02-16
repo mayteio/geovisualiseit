@@ -13,7 +13,7 @@ import {
 import styled from 'styled-components';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { useUser } from '../common/AuthenticationProvider';
+import { useUser } from '../auth/AuthenticationProvider';
 import { useDispatch } from 'react-redux';
 import { setLoginOpen } from '../common/appState';
 import { useSnackbar } from 'notistack';
@@ -54,7 +54,7 @@ export const DetailsForm = () => {
                 handleSimpleFormSubmit();
               }}
             >
-              <Box display="flex" p={2}>
+              <Box display="flex" p={2} bgcolor="background.default">
                 <Box flexGrow={1} pr={2}>
                   <TextField
                     label="Visualisation name"
@@ -64,10 +64,11 @@ export const DetailsForm = () => {
                     style={{ width: '100%' }}
                   />
                 </Box>
-
-                <Button color="primary" variant="contained" type="submit">
-                  Save
-                </Button>
+                <Box display="flex" alignItems="flex-end">
+                  <Button color="primary" variant="contained" type="submit">
+                    Save
+                  </Button>
+                </Box>
               </Box>
             </form>
           </NoBoxSizing>
@@ -99,7 +100,12 @@ export const DetailsForm = () => {
                   <FormControlLabel
                     label="Visualisation is public"
                     control={
-                      <Switch value={values.isPublic} onChange={handleChange} name="isPublic" />
+                      <Switch
+                        value={values.isPublic}
+                        onChange={handleChange}
+                        name="isPublic"
+                        color="primary"
+                      />
                     }
                   />
                   <Box></Box>
@@ -107,7 +113,7 @@ export const DetailsForm = () => {
               </Box>
             </DialogContent>
             <DialogActions>
-              <Button variant="contained" color="secondary" type="submit">
+              <Button variant="contained" color="primary" type="submit">
                 Publish
               </Button>
             </DialogActions>

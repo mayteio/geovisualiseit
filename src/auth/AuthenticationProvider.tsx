@@ -3,10 +3,14 @@ import Auth, { AuthClass } from '@aws-amplify/auth';
 import { Hub } from '@aws-amplify/core';
 import { HubCapsule } from '@aws-amplify/core/lib-esm/Hub';
 import { CognitoUser } from 'amazon-cognito-identity-js';
+import { SignupDialog } from './SignupDialog';
 
 const AuthentiationContext = React.createContext<
   | {
       signIn: AuthClass['signIn'];
+      signUp: AuthClass['signUp'];
+      resendSignUp: AuthClass['resendSignUp'];
+      confirmSignUp: AuthClass['confirmSignUp'];
       signOut: AuthClass['signOut'];
       forgotPassword: AuthClass['forgotPassword'];
       changePassword: AuthClass['changePassword'];
@@ -22,13 +26,6 @@ const UserContext = React.createContext<CognitoUser | undefined>(undefined);
  * the API above and everything using useAuth and useUser should just work!
  */
 export const AuthenticationProvider: React.FC = ({ children }) => {
-  // methods used in this app.
-  const signIn = Auth.signIn;
-  const signOut = Auth.signOut;
-  const forgotPassword = Auth.forgotPassword;
-  const changePassword = Auth.changePassword;
-  const completeNewPassword = Auth.completeNewPassword;
-
   // on mount, store the user and listen to hub changes (Amplify's internal)
   const [user, setUser] = useState<undefined | CognitoUser>(undefined);
   useEffect(() => {
@@ -64,16 +61,11 @@ export const AuthenticationProvider: React.FC = ({ children }) => {
   }, []);
 
   return (
-    <AuthentiationContext.Provider
-      value={{
-        signIn,
-        signOut,
-        forgotPassword,
-        changePassword,
-        completeNewPassword,
-      }}
-    >
-      <UserContext.Provider value={user}>{children}</UserContext.Provider>
+    <AuthentiationContext.Provider value={Auth}>
+      <UserContext.Provider value={user}>
+        {!user && <SignupDialog />}
+        {children}
+      </UserContext.Provider>
     </AuthentiationContext.Provider>
   );
 };

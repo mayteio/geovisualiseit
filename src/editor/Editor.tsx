@@ -5,6 +5,7 @@ import useMeasure from 'react-use-measure';
 import { DetailsForm } from './DetailsForm';
 
 import { injectComponents, PanelHeaderFactory } from 'kepler.gl/components';
+import { keplerTheme } from '../common/themes';
 const headerFactory = () => DetailsForm;
 
 const KeplerGl = injectComponents([[PanelHeaderFactory, headerFactory]]);
@@ -27,6 +28,7 @@ export const Editor = () => {
             mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_API_ACCESS_KEY}
             width={width}
             height={height}
+            theme={keplerTheme}
           />
         </Box>
       </Box>

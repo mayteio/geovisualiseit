@@ -9,9 +9,9 @@ import {
   DialogActions,
 } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
-import { setLoginOpen } from '../common/appState';
+import { setLoginOpen, setSignupOpen } from '../common/appState';
 import { Formik } from 'formik';
-import { useAuth, useUser } from '../common/AuthenticationProvider';
+import { useAuth } from './AuthenticationProvider';
 import { useSnackbar } from 'notistack';
 
 export const LoginButtonAndForm: React.FC = () => {
@@ -19,10 +19,9 @@ export const LoginButtonAndForm: React.FC = () => {
 
   const dispatch = useDispatch();
   const auth = useAuth();
-  const user = useUser();
   const { enqueueSnackbar } = useSnackbar();
 
-  return !user ? (
+  return (
     <>
       <Button onClick={() => dispatch(setLoginOpen(true))}>Login</Button>
       {
@@ -66,6 +65,14 @@ export const LoginButtonAndForm: React.FC = () => {
                   </Box>
                 </DialogContent>
                 <DialogActions>
+                  <Button
+                    onClick={() => {
+                      dispatch(setSignupOpen(true));
+                      dispatch(setLoginOpen(false));
+                    }}
+                  >
+                    Not a member? Sign up
+                  </Button>
                   <Button variant="contained" color="primary" type="submit">
                     Login
                   </Button>
@@ -76,5 +83,5 @@ export const LoginButtonAndForm: React.FC = () => {
         </Dialog>
       }
     </>
-  ) : null;
+  );
 };
