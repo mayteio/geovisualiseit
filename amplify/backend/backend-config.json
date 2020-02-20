@@ -1,19 +1,28 @@
 {
-	"function": {
-		"visualiseit903c3202903c3202PostConfirmation": {
-			"service": "Lambda",
-			"providerPlugin": "awscloudformation",
-			"build": true
-		}
-	},
 	"auth": {
+		"geovisualiseit412bd446": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [
+				{
+					"category": "function",
+					"resourceName": "geovisualiseit412bd446PostConfirmation",
+					"triggerProvider": "Cognito",
+					"attributes": [
+						"Arn",
+						"Name"
+					]
+				}
+			],
+			"customAuth": false
+		},
 		"userPoolGroups": {
 			"service": "Cognito-UserPool-Groups",
 			"providerPlugin": "awscloudformation",
 			"dependsOn": [
 				{
 					"category": "auth",
-					"resourceName": "visualiseit903c3202903c3202",
+					"resourceName": "geovisualiseit412bd446",
 					"attributes": [
 						"UserPoolId",
 						"AppClientIDWeb",
@@ -22,25 +31,16 @@
 					]
 				}
 			]
-		},
-		"visualiseit903c3202903c3202": {
-			"service": "Cognito",
-			"providerPlugin": "awscloudformation",
-			"dependsOn": [
-				{
-					"category": "function",
-					"resourceName": "visualiseit903c3202903c3202PostConfirmation",
-					"triggerProvider": "Cognito",
-					"attributes": [
-						"Arn",
-						"Name"
-					]
-				}
-			]
+		}
+	},
+	"storage": {
+		"s3a205d64d": {
+			"service": "S3",
+			"providerPlugin": "awscloudformation"
 		}
 	},
 	"api": {
-		"visualiseit": {
+		"geovisualiseit": {
 			"service": "AppSync",
 			"providerPlugin": "awscloudformation",
 			"output": {
@@ -49,25 +49,26 @@
 						{
 							"authenticationType": "API_KEY",
 							"apiKeyConfig": {
-								"description": "For public access",
-								"apiKeyExpirationDays": 7
+								"description": "API Key",
+								"apiKeyExpirationDays": "365"
 							}
 						}
 					],
 					"defaultAuthentication": {
 						"authenticationType": "AMAZON_COGNITO_USER_POOLS",
 						"userPoolConfig": {
-							"userPoolId": "authvisualiseit903c3202903c3202"
+							"userPoolId": "authgeovisualiseit412bd446"
 						}
 					}
 				}
 			}
 		}
 	},
-	"storage": {
-		"uploads": {
-			"service": "S3",
-			"providerPlugin": "awscloudformation"
+	"function": {
+		"geovisualiseit412bd446PostConfirmation": {
+			"service": "Lambda",
+			"providerPlugin": "awscloudformation",
+			"build": true
 		}
 	}
 }

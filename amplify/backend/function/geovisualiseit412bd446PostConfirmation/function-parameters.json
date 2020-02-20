@@ -1,0 +1,14 @@
+{
+    "trigger": true,
+    "modules": [
+        "add-to-group"
+    ],
+    "parentResource": "geovisualiseit412bd446",
+    "functionName": "geovisualiseit412bd446PostConfirmation",
+    "parentStack": "auth",
+    "triggerEnvs": "[]",
+    "triggerTemplate": "PostConfirmation.json.ejs",
+    "roleName": "geovisualiseit412bd446PostConfirmation",
+    "skipEdit": true,
+    "resourceName": "geovisualiseit412bd446PostConfirmation"
+}

@@ -7,16 +7,6 @@ export const onCreateProfile = /* GraphQL */ `
       id
       title
       owner
-      visualisations {
-        items {
-          id
-          title
-          description
-          password
-          owner
-        }
-        nextToken
-      }
     }
   }
 `;
@@ -26,16 +16,6 @@ export const onUpdateProfile = /* GraphQL */ `
       id
       title
       owner
-      visualisations {
-        items {
-          id
-          title
-          description
-          password
-          owner
-        }
-        nextToken
-      }
     }
   }
 `;
@@ -45,16 +25,6 @@ export const onDeleteProfile = /* GraphQL */ `
       id
       title
       owner
-      visualisations {
-        items {
-          id
-          title
-          description
-          password
-          owner
-        }
-        nextToken
-      }
     }
   }
 `;
@@ -64,46 +34,35 @@ export const onCreateVisualisation = /* GraphQL */ `
       id
       title
       description
-      datasets {
+      config {
         id
-        title
+        visualisation {
+          id
+          title
+          description
+          owner
+        }
         file {
           bucket
           key
           region
         }
         owner
+      }
+      datasets {
+        items {
+          id
+          title
+          owner
+        }
+        nextToken
       }
       image {
         bucket
         key
         region
       }
-      password
-      profile {
-        id
-        title
-        owner
-        visualisations {
-          nextToken
-        }
-      }
       owner
-      config {
-        file {
-          bucket
-          key
-          region
-        }
-        visualisation {
-          id
-          title
-          description
-          password
-          owner
-        }
-        owner
-      }
     }
   }
 `;
@@ -113,46 +72,35 @@ export const onUpdateVisualisation = /* GraphQL */ `
       id
       title
       description
-      datasets {
+      config {
         id
-        title
+        visualisation {
+          id
+          title
+          description
+          owner
+        }
         file {
           bucket
           key
           region
         }
         owner
+      }
+      datasets {
+        items {
+          id
+          title
+          owner
+        }
+        nextToken
       }
       image {
         bucket
         key
         region
       }
-      password
-      profile {
-        id
-        title
-        owner
-        visualisations {
-          nextToken
-        }
-      }
       owner
-      config {
-        file {
-          bucket
-          key
-          region
-        }
-        visualisation {
-          id
-          title
-          description
-          password
-          owner
-        }
-        owner
-      }
     }
   }
 `;
@@ -162,83 +110,126 @@ export const onDeleteVisualisation = /* GraphQL */ `
       id
       title
       description
-      datasets {
+      config {
         id
-        title
+        visualisation {
+          id
+          title
+          description
+          owner
+        }
         file {
           bucket
           key
           region
         }
         owner
+      }
+      datasets {
+        items {
+          id
+          title
+          owner
+        }
+        nextToken
       }
       image {
         bucket
         key
         region
       }
-      password
-      profile {
+      owner
+    }
+  }
+`;
+export const onCreateConfig = /* GraphQL */ `
+  subscription OnCreateConfig($owner: String) {
+    onCreateConfig(owner: $owner) {
+      id
+      visualisation {
         id
         title
-        owner
-        visualisations {
+        description
+        config {
+          id
+          owner
+        }
+        datasets {
           nextToken
         }
-      }
-      owner
-      config {
-        file {
+        image {
           bucket
           key
           region
         }
-        visualisation {
+        owner
+      }
+      file {
+        bucket
+        key
+        region
+      }
+      owner
+    }
+  }
+`;
+export const onUpdateConfig = /* GraphQL */ `
+  subscription OnUpdateConfig($owner: String) {
+    onUpdateConfig(owner: $owner) {
+      id
+      visualisation {
+        id
+        title
+        description
+        config {
           id
-          title
-          description
-          password
           owner
+        }
+        datasets {
+          nextToken
+        }
+        image {
+          bucket
+          key
+          region
         }
         owner
       }
-    }
-  }
-`;
-export const onCreateLocation = /* GraphQL */ `
-  subscription OnCreateLocation($owner: String) {
-    onCreateLocation(owner: $owner) {
-      name
-      country
-      latlng {
-        latitude
-        longitude
+      file {
+        bucket
+        key
+        region
       }
       owner
     }
   }
 `;
-export const onUpdateLocation = /* GraphQL */ `
-  subscription OnUpdateLocation {
-    onUpdateLocation {
-      name
-      country
-      latlng {
-        latitude
-        longitude
+export const onDeleteConfig = /* GraphQL */ `
+  subscription OnDeleteConfig($owner: String) {
+    onDeleteConfig(owner: $owner) {
+      id
+      visualisation {
+        id
+        title
+        description
+        config {
+          id
+          owner
+        }
+        datasets {
+          nextToken
+        }
+        image {
+          bucket
+          key
+          region
+        }
+        owner
       }
-      owner
-    }
-  }
-`;
-export const onDeleteLocation = /* GraphQL */ `
-  subscription OnDeleteLocation {
-    onDeleteLocation {
-      name
-      country
-      latlng {
-        latitude
-        longitude
+      file {
+        bucket
+        key
+        region
       }
       owner
     }
@@ -248,6 +239,24 @@ export const onCreateDataset = /* GraphQL */ `
   subscription OnCreateDataset($owner: String) {
     onCreateDataset(owner: $owner) {
       id
+      visualisation {
+        id
+        title
+        description
+        config {
+          id
+          owner
+        }
+        datasets {
+          nextToken
+        }
+        image {
+          bucket
+          key
+          region
+        }
+        owner
+      }
       title
       file {
         bucket
@@ -262,6 +271,24 @@ export const onUpdateDataset = /* GraphQL */ `
   subscription OnUpdateDataset($owner: String) {
     onUpdateDataset(owner: $owner) {
       id
+      visualisation {
+        id
+        title
+        description
+        config {
+          id
+          owner
+        }
+        datasets {
+          nextToken
+        }
+        image {
+          bucket
+          key
+          region
+        }
+        owner
+      }
       title
       file {
         bucket
@@ -276,122 +303,29 @@ export const onDeleteDataset = /* GraphQL */ `
   subscription OnDeleteDataset($owner: String) {
     onDeleteDataset(owner: $owner) {
       id
+      visualisation {
+        id
+        title
+        description
+        config {
+          id
+          owner
+        }
+        datasets {
+          nextToken
+        }
+        image {
+          bucket
+          key
+          region
+        }
+        owner
+      }
       title
       file {
         bucket
         key
         region
-      }
-      owner
-    }
-  }
-`;
-export const onCreateConfig = /* GraphQL */ `
-  subscription OnCreateConfig($owner: String) {
-    onCreateConfig(owner: $owner) {
-      file {
-        bucket
-        key
-        region
-      }
-      visualisation {
-        id
-        title
-        description
-        datasets {
-          id
-          title
-          owner
-        }
-        image {
-          bucket
-          key
-          region
-        }
-        password
-        profile {
-          id
-          title
-          owner
-        }
-        owner
-        config {
-          owner
-        }
-      }
-      owner
-    }
-  }
-`;
-export const onUpdateConfig = /* GraphQL */ `
-  subscription OnUpdateConfig($owner: String) {
-    onUpdateConfig(owner: $owner) {
-      file {
-        bucket
-        key
-        region
-      }
-      visualisation {
-        id
-        title
-        description
-        datasets {
-          id
-          title
-          owner
-        }
-        image {
-          bucket
-          key
-          region
-        }
-        password
-        profile {
-          id
-          title
-          owner
-        }
-        owner
-        config {
-          owner
-        }
-      }
-      owner
-    }
-  }
-`;
-export const onDeleteConfig = /* GraphQL */ `
-  subscription OnDeleteConfig($owner: String) {
-    onDeleteConfig(owner: $owner) {
-      file {
-        bucket
-        key
-        region
-      }
-      visualisation {
-        id
-        title
-        description
-        datasets {
-          id
-          title
-          owner
-        }
-        image {
-          bucket
-          key
-          region
-        }
-        password
-        profile {
-          id
-          title
-          owner
-        }
-        owner
-        config {
-          owner
-        }
       }
       owner
     }

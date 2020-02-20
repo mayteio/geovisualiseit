@@ -1,10 +1,10 @@
 {
-    "AppSyncApiName": "visualiseit",
+    "AppSyncApiName": "geovisualiseit",
     "DynamoDBBillingMode": "PAY_PER_REQUEST",
     "DynamoDBEnableServerSideEncryption": "false",
     "AuthCognitoUserPoolId": {
         "Fn::GetAtt": [
-            "authvisualiseit903c3202903c3202",
+            "authgeovisualiseit412bd446",
             "Outputs.UserPoolId"
         ]
     }

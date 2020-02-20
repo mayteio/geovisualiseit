@@ -1,23 +1,22 @@
-import React from 'react';
-import { Header } from '../common/Header';
-import { Box } from '@material-ui/core';
-import useMeasure from 'react-use-measure';
-import { DetailsForm } from './DetailsForm';
-// import { FileUpload } from './FileUpload';
-import { Modal } from '../common/Modal';
+import React from "react";
+import { Header } from "../common/Header";
+import { Box } from "@material-ui/core";
+import useMeasure from "react-use-measure";
+import { DetailsForm } from "./DetailsForm";
 
-import { injectComponents, PanelHeaderFactory, ModalFactory } from 'kepler.gl/components';
-import { convertToPng } from 'kepler.gl/dist/utils/export-image-utils';
-import { keplerTheme } from '../common/themes';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../Store';
+import { injectComponents, PanelHeaderFactory } from "kepler.gl/components";
+import { convertToPng } from "kepler.gl/dist/utils/export-image-utils";
+import { keplerTheme } from "../common/themes";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../Store";
 
-import { startExportingImage, cleanupExportImage, setExportImageDataUri } from 'kepler.gl/actions';
+import {
+  startExportingImage,
+  cleanupExportImage,
+  setExportImageDataUri
+} from "kepler.gl/actions";
 
-const KeplerGl = injectComponents([
-  [PanelHeaderFactory, () => DetailsForm],
-  [ModalFactory, () => Modal],
-]);
+const KeplerGl = injectComponents([[PanelHeaderFactory, () => DetailsForm]]);
 
 export const Editor = () => {
   const [ref, { width, height }] = useMeasure();
@@ -56,7 +55,10 @@ export const ScreenshotContainer: React.FC = ({ children }) => {
     if (editorDialogOpen) {
       dispatch(startExportingImage());
       const filter = (node: any) =>
-        !(node.classList && node.classList.contains('mapboxgl-control-container'));
+        !(
+          node.classList &&
+          node.classList.contains("mapboxgl-control-container")
+        );
       convertToPng(screenshotRef.current, { filter }).then((dataUri: any) => {
         dispatch(setExportImageDataUri(dataUri));
       });

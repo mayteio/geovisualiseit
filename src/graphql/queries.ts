@@ -1,6 +1,15 @@
 // tslint:disable
 // this is an auto generated file. This will be overwritten
 
+export const getProfile = /* GraphQL */ `
+  query GetProfile($id: ID!) {
+    getProfile(id: $id) {
+      id
+      title
+      owner
+    }
+  }
+`;
 export const listProfiles = /* GraphQL */ `
   query ListProfiles(
     $filter: ModelProfileFilterInput
@@ -12,30 +21,46 @@ export const listProfiles = /* GraphQL */ `
         id
         title
         owner
-        visualisations {
-          nextToken
-        }
       }
       nextToken
     }
   }
 `;
-export const getProfile = /* GraphQL */ `
-  query GetProfile($id: ID!) {
-    getProfile(id: $id) {
+export const getVisualisation = /* GraphQL */ `
+  query GetVisualisation($id: ID!) {
+    getVisualisation(id: $id) {
       id
       title
-      owner
-      visualisations {
-        items {
+      description
+      config {
+        id
+        visualisation {
           id
           title
           description
-          password
+          owner
+        }
+        file {
+          bucket
+          key
+          region
+        }
+        owner
+      }
+      datasets {
+        items {
+          id
+          title
           owner
         }
         nextToken
       }
+      image {
+        bucket
+        key
+        region
+      }
+      owner
     }
   }
 `;
@@ -50,106 +75,74 @@ export const listVisualisations = /* GraphQL */ `
         id
         title
         description
-        datasets {
+        config {
           id
-          title
           owner
+        }
+        datasets {
+          nextToken
         }
         image {
           bucket
           key
           region
         }
-        password
-        profile {
-          id
-          title
-          owner
-        }
         owner
-        config {
-          owner
-        }
       }
       nextToken
     }
   }
 `;
-export const getVisualisation = /* GraphQL */ `
-  query GetVisualisation($id: ID!) {
-    getVisualisation(id: $id) {
+export const getConfig = /* GraphQL */ `
+  query GetConfig($id: ID!) {
+    getConfig(id: $id) {
       id
-      title
-      description
-      datasets {
+      visualisation {
         id
         title
-        file {
+        description
+        config {
+          id
+          owner
+        }
+        datasets {
+          nextToken
+        }
+        image {
           bucket
           key
           region
         }
         owner
       }
-      image {
+      file {
         bucket
         key
         region
       }
-      password
-      profile {
-        id
-        title
-        owner
-        visualisations {
-          nextToken
-        }
-      }
       owner
-      config {
-        file {
-          bucket
-          key
-          region
-        }
+    }
+  }
+`;
+export const listConfigs = /* GraphQL */ `
+  query ListConfigs(
+    $filter: ModelConfigFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listConfigs(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
         visualisation {
           id
           title
           description
-          password
           owner
         }
-        owner
-      }
-    }
-  }
-`;
-export const getLocation = /* GraphQL */ `
-  query GetLocation($id: ID!) {
-    getLocation(id: $id) {
-      name
-      country
-      latlng {
-        latitude
-        longitude
-      }
-      owner
-    }
-  }
-`;
-export const listLocations = /* GraphQL */ `
-  query ListLocations(
-    $filter: ModelLocationFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listLocations(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        name
-        country
-        latlng {
-          latitude
-          longitude
+        file {
+          bucket
+          key
+          region
         }
         owner
       }
@@ -161,6 +154,24 @@ export const getDataset = /* GraphQL */ `
   query GetDataset($id: ID!) {
     getDataset(id: $id) {
       id
+      visualisation {
+        id
+        title
+        description
+        config {
+          id
+          owner
+        }
+        datasets {
+          nextToken
+        }
+        image {
+          bucket
+          key
+          region
+        }
+        owner
+      }
       title
       file {
         bucket
@@ -180,78 +191,21 @@ export const listDatasets = /* GraphQL */ `
     listDatasets(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        title
-        file {
-          bucket
-          key
-          region
-        }
-        owner
-      }
-      nextToken
-    }
-  }
-`;
-export const listConfigs = /* GraphQL */ `
-  query ListConfigs(
-    $filter: ModelConfigFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listConfigs(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        file {
-          bucket
-          key
-          region
-        }
         visualisation {
           id
           title
           description
-          password
           owner
         }
-        owner
-      }
-      nextToken
-    }
-  }
-`;
-export const getConfig = /* GraphQL */ `
-  query GetConfig($id: ID!) {
-    getConfig(id: $id) {
-      file {
-        bucket
-        key
-        region
-      }
-      visualisation {
-        id
         title
-        description
-        datasets {
-          id
-          title
-          owner
-        }
-        image {
+        file {
           bucket
           key
           region
         }
-        password
-        profile {
-          id
-          title
-          owner
-        }
         owner
-        config {
-          owner
-        }
       }
-      owner
+      nextToken
     }
   }
 `;

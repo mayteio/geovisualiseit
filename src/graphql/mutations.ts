@@ -10,16 +10,6 @@ export const createProfile = /* GraphQL */ `
       id
       title
       owner
-      visualisations {
-        items {
-          id
-          title
-          description
-          password
-          owner
-        }
-        nextToken
-      }
     }
   }
 `;
@@ -32,16 +22,6 @@ export const updateProfile = /* GraphQL */ `
       id
       title
       owner
-      visualisations {
-        items {
-          id
-          title
-          description
-          password
-          owner
-        }
-        nextToken
-      }
     }
   }
 `;
@@ -54,16 +34,6 @@ export const deleteProfile = /* GraphQL */ `
       id
       title
       owner
-      visualisations {
-        items {
-          id
-          title
-          description
-          password
-          owner
-        }
-        nextToken
-      }
     }
   }
 `;
@@ -76,46 +46,35 @@ export const createVisualisation = /* GraphQL */ `
       id
       title
       description
-      datasets {
+      config {
         id
-        title
+        visualisation {
+          id
+          title
+          description
+          owner
+        }
         file {
           bucket
           key
           region
         }
         owner
+      }
+      datasets {
+        items {
+          id
+          title
+          owner
+        }
+        nextToken
       }
       image {
         bucket
         key
         region
       }
-      password
-      profile {
-        id
-        title
-        owner
-        visualisations {
-          nextToken
-        }
-      }
       owner
-      config {
-        file {
-          bucket
-          key
-          region
-        }
-        visualisation {
-          id
-          title
-          description
-          password
-          owner
-        }
-        owner
-      }
     }
   }
 `;
@@ -128,46 +87,35 @@ export const updateVisualisation = /* GraphQL */ `
       id
       title
       description
-      datasets {
+      config {
         id
-        title
+        visualisation {
+          id
+          title
+          description
+          owner
+        }
         file {
           bucket
           key
           region
         }
         owner
+      }
+      datasets {
+        items {
+          id
+          title
+          owner
+        }
+        nextToken
       }
       image {
         bucket
         key
         region
       }
-      password
-      profile {
-        id
-        title
-        owner
-        visualisations {
-          nextToken
-        }
-      }
       owner
-      config {
-        file {
-          bucket
-          key
-          region
-        }
-        visualisation {
-          id
-          title
-          description
-          password
-          owner
-        }
-        owner
-      }
     }
   }
 `;
@@ -180,92 +128,135 @@ export const deleteVisualisation = /* GraphQL */ `
       id
       title
       description
-      datasets {
+      config {
         id
-        title
+        visualisation {
+          id
+          title
+          description
+          owner
+        }
         file {
           bucket
           key
           region
         }
         owner
+      }
+      datasets {
+        items {
+          id
+          title
+          owner
+        }
+        nextToken
       }
       image {
         bucket
         key
         region
       }
-      password
-      profile {
+      owner
+    }
+  }
+`;
+export const createConfig = /* GraphQL */ `
+  mutation CreateConfig(
+    $input: CreateConfigInput!
+    $condition: ModelConfigConditionInput
+  ) {
+    createConfig(input: $input, condition: $condition) {
+      id
+      visualisation {
         id
         title
-        owner
-        visualisations {
+        description
+        config {
+          id
+          owner
+        }
+        datasets {
           nextToken
         }
-      }
-      owner
-      config {
-        file {
+        image {
           bucket
           key
           region
         }
-        visualisation {
+        owner
+      }
+      file {
+        bucket
+        key
+        region
+      }
+      owner
+    }
+  }
+`;
+export const updateConfig = /* GraphQL */ `
+  mutation UpdateConfig(
+    $input: UpdateConfigInput!
+    $condition: ModelConfigConditionInput
+  ) {
+    updateConfig(input: $input, condition: $condition) {
+      id
+      visualisation {
+        id
+        title
+        description
+        config {
           id
-          title
-          description
-          password
           owner
+        }
+        datasets {
+          nextToken
+        }
+        image {
+          bucket
+          key
+          region
         }
         owner
       }
-    }
-  }
-`;
-export const createLocation = /* GraphQL */ `
-  mutation CreateLocation(
-    $input: CreateLocationInput!
-    $condition: ModelLocationConditionInput
-  ) {
-    createLocation(input: $input, condition: $condition) {
-      name
-      country
-      latlng {
-        latitude
-        longitude
+      file {
+        bucket
+        key
+        region
       }
       owner
     }
   }
 `;
-export const updateLocation = /* GraphQL */ `
-  mutation UpdateLocation(
-    $input: UpdateLocationInput!
-    $condition: ModelLocationConditionInput
+export const deleteConfig = /* GraphQL */ `
+  mutation DeleteConfig(
+    $input: DeleteConfigInput!
+    $condition: ModelConfigConditionInput
   ) {
-    updateLocation(input: $input, condition: $condition) {
-      name
-      country
-      latlng {
-        latitude
-        longitude
+    deleteConfig(input: $input, condition: $condition) {
+      id
+      visualisation {
+        id
+        title
+        description
+        config {
+          id
+          owner
+        }
+        datasets {
+          nextToken
+        }
+        image {
+          bucket
+          key
+          region
+        }
+        owner
       }
-      owner
-    }
-  }
-`;
-export const deleteLocation = /* GraphQL */ `
-  mutation DeleteLocation(
-    $input: DeleteLocationInput!
-    $condition: ModelLocationConditionInput
-  ) {
-    deleteLocation(input: $input, condition: $condition) {
-      name
-      country
-      latlng {
-        latitude
-        longitude
+      file {
+        bucket
+        key
+        region
       }
       owner
     }
@@ -278,6 +269,24 @@ export const createDataset = /* GraphQL */ `
   ) {
     createDataset(input: $input, condition: $condition) {
       id
+      visualisation {
+        id
+        title
+        description
+        config {
+          id
+          owner
+        }
+        datasets {
+          nextToken
+        }
+        image {
+          bucket
+          key
+          region
+        }
+        owner
+      }
       title
       file {
         bucket
@@ -295,6 +304,24 @@ export const updateDataset = /* GraphQL */ `
   ) {
     updateDataset(input: $input, condition: $condition) {
       id
+      visualisation {
+        id
+        title
+        description
+        config {
+          id
+          owner
+        }
+        datasets {
+          nextToken
+        }
+        image {
+          bucket
+          key
+          region
+        }
+        owner
+      }
       title
       file {
         bucket
@@ -312,131 +339,29 @@ export const deleteDataset = /* GraphQL */ `
   ) {
     deleteDataset(input: $input, condition: $condition) {
       id
+      visualisation {
+        id
+        title
+        description
+        config {
+          id
+          owner
+        }
+        datasets {
+          nextToken
+        }
+        image {
+          bucket
+          key
+          region
+        }
+        owner
+      }
       title
       file {
         bucket
         key
         region
-      }
-      owner
-    }
-  }
-`;
-export const createConfig = /* GraphQL */ `
-  mutation CreateConfig(
-    $input: CreateConfigInput!
-    $condition: ModelConfigConditionInput
-  ) {
-    createConfig(input: $input, condition: $condition) {
-      file {
-        bucket
-        key
-        region
-      }
-      visualisation {
-        id
-        title
-        description
-        datasets {
-          id
-          title
-          owner
-        }
-        image {
-          bucket
-          key
-          region
-        }
-        password
-        profile {
-          id
-          title
-          owner
-        }
-        owner
-        config {
-          owner
-        }
-      }
-      owner
-    }
-  }
-`;
-export const updateConfig = /* GraphQL */ `
-  mutation UpdateConfig(
-    $input: UpdateConfigInput!
-    $condition: ModelConfigConditionInput
-  ) {
-    updateConfig(input: $input, condition: $condition) {
-      file {
-        bucket
-        key
-        region
-      }
-      visualisation {
-        id
-        title
-        description
-        datasets {
-          id
-          title
-          owner
-        }
-        image {
-          bucket
-          key
-          region
-        }
-        password
-        profile {
-          id
-          title
-          owner
-        }
-        owner
-        config {
-          owner
-        }
-      }
-      owner
-    }
-  }
-`;
-export const deleteConfig = /* GraphQL */ `
-  mutation DeleteConfig(
-    $input: DeleteConfigInput!
-    $condition: ModelConfigConditionInput
-  ) {
-    deleteConfig(input: $input, condition: $condition) {
-      file {
-        bucket
-        key
-        region
-      }
-      visualisation {
-        id
-        title
-        description
-        datasets {
-          id
-          title
-          owner
-        }
-        image {
-          bucket
-          key
-          region
-        }
-        password
-        profile {
-          id
-          title
-          owner
-        }
-        owner
-        config {
-          owner
-        }
       }
       owner
     }

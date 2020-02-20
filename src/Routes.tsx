@@ -1,6 +1,6 @@
-import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { Editor } from './editor/Editor';
+import React from "react";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { Editor } from "./editor/Editor";
 
 export const Routes: React.FC = () => {
   return (
@@ -10,9 +10,10 @@ export const Routes: React.FC = () => {
         <Route path="/v/new">
           <Editor />
         </Route>
-        <Route path="/v/:id/edit"></Route>
-        <Route path="/v/:id"></Route>
-        <Route path="/me"></Route>
+        <Route path="/v/:visualisationId/edit"></Route>
+        <Route path="/v/:visualisationId"></Route>
+        <Route path="/p/:profileId"></Route>
+        <Route path="/p/me"></Route>
         <Route path="/"></Route>
       </Switch>
     </BrowserRouter>

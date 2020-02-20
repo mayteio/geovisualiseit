@@ -61,12 +61,12 @@
 				"FunctionName": {
 					"Fn::If": [
 						"ShouldNotCreateEnvResources",
-						"visualiseit903c3202903c3202PostConfirmation",
+						"geovisualiseit412bd446PostConfirmation",
 						{
 							"Fn::Join": [
 								"",
 								[
-									"visualiseit903c3202903c3202PostConfirmation",
+									"geovisualiseit412bd446PostConfirmation",
 									"-",
 									{
 										"Ref": "env"
@@ -101,8 +101,8 @@
 				"Runtime": "nodejs10.x",
 				"Timeout": "25",
 				"Code": {
-					"S3Bucket": "amplify-visualiseit-develop-124040-deployment",
-					"S3Key": "amplify-builds/visualiseit903c3202903c3202PostConfirmation-526c5972465638797265-build.zip"
+					"S3Bucket": "amplify-geovisualiseit-develop-213936-deployment",
+					"S3Key": "amplify-builds/geovisualiseit412bd446PostConfirmation-644b504e493947776745-build.zip"
 				}
 			}
 		},
@@ -112,12 +112,12 @@
 				"RoleName": {
 					"Fn::If": [
 						"ShouldNotCreateEnvResources",
-						"visualiseit903c3202903c3202PostConfirmation",
+						"geovisualiseit412bd446PostConfirmation",
 						{
 							"Fn::Join": [
 								"",
 								[
-									"visualiseit903c3202903c3202PostConfirmation",
+									"geovisualiseit412bd446PostConfirmation",
 									"-",
 									{
 										"Ref": "env"

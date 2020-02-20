@@ -12,6 +12,7 @@
     "@material-ui/icons": "^4.9.1",
     "@reduxjs/toolkit": "^1.2.5",
     "apollo-boost": "^0.4.7",
+    "aws-appsync": "^3.0.2",
     "formik": "^2.1.4",
     "kepler.gl": "^1.1.13",
     "notistack": "^0.9.7",

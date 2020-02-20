@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "visualiseit903c3202_identitypool_903c3202",
+    "identityPoolName": "geovisualiseit412bd446_identitypool_412bd446",
     "allowUnauthenticatedIdentities": true,
-    "resourceNameTruncated": "visual903c3202",
-    "userPoolName": "visualiseit903c3202_userpool_903c3202",
+    "resourceNameTruncated": "geovis412bd446",
+    "userPoolName": "geovisualiseit412bd446_userpool_412bd446",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -21,28 +21,17 @@
         "email"
     ],
     "userpoolClientGenerateSecret": true,
-    "userpoolClientRefreshTokenValidity": 30,
+    "userpoolClientRefreshTokenValidity": "365",
     "userpoolClientWriteAttributes": [
         "email"
     ],
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "visual903c3202_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "geovis412bd446_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "useDefault": "manual",
+    "resourceName": "geovisualiseit412bd446",
     "authSelections": "identityPoolAndUserPool",
-    "resourceName": "visualiseit903c3202903c3202",
-    "thirdPartyAuth": false,
-    "userPoolGroups": true,
-    "adminQueries": false,
-    "triggers": "{\"PostConfirmation\":[\"add-to-group\"]}",
-    "hostedUI": false,
-    "userPoolGroupList": [
-        "admin",
-        "editor",
-        "user"
-    ],
     "authRoleArn": {
         "Fn::GetAtt": [
             "AuthRole",
@@ -55,21 +44,34 @@
             "Arn"
         ]
     },
-    "parentStack": {
-        "Ref": "AWS::StackId"
-    },
-    "permissions": [
-        "{\"policyName\":\"AddToGroupCognito\",\"trigger\":\"PostConfirmation\",\"effect\":\"Allow\",\"actions\":[\"cognito-idp:AdminAddUserToGroup\",\"cognito-idp:GetGroup\",\"cognito-idp:CreateGroup\"],\"resource\":{\"paramType\":\"!GetAtt\",\"keys\":[\"UserPool\",\"Arn\"]}}"
+    "useDefault": "manual",
+    "usernameAttributes": [
+        "email"
+    ],
+    "userPoolGroupList": [
+        "admin",
+        "user"
     ],
     "dependsOn": [
         {
             "category": "function",
-            "resourceName": "visualiseit903c3202903c3202PostConfirmation",
+            "resourceName": "geovisualiseit412bd446PostConfirmation",
             "triggerProvider": "Cognito",
             "attributes": [
                 "Arn",
                 "Name"
             ]
         }
+    ],
+    "thirdPartyAuth": false,
+    "userPoolGroups": true,
+    "adminQueries": false,
+    "triggers": "{\"PostConfirmation\":[\"add-to-group\"]}",
+    "hostedUI": false,
+    "parentStack": {
+        "Ref": "AWS::StackId"
+    },
+    "permissions": [
+        "{\"policyName\":\"AddToGroupCognito\",\"trigger\":\"PostConfirmation\",\"effect\":\"Allow\",\"actions\":[\"cognito-idp:AdminAddUserToGroup\",\"cognito-idp:GetGroup\",\"cognito-idp:CreateGroup\"],\"resource\":{\"paramType\":\"!GetAtt\",\"keys\":[\"UserPool\",\"Arn\"]}}"
     ]
 }

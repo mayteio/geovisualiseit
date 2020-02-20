@@ -1,24 +1,24 @@
 {
     "develop": {
         "awscloudformation": {
-            "AuthRoleName": "amplify-visualiseit-develop-124040-authRole",
-            "UnauthRoleArn": "arn:aws:iam::411851357203:role/amplify-visualiseit-develop-124040-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::411851357203:role/amplify-visualiseit-develop-124040-authRole",
+            "AuthRoleName": "amplify-geovisualiseit-develop-213936-authRole",
+            "UnauthRoleArn": "arn:aws:iam::411851357203:role/amplify-geovisualiseit-develop-213936-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::411851357203:role/amplify-geovisualiseit-develop-213936-authRole",
             "Region": "ap-southeast-2",
-            "DeploymentBucketName": "amplify-visualiseit-develop-124040-deployment",
-            "UnauthRoleName": "amplify-visualiseit-develop-124040-unauthRole",
-            "StackName": "amplify-visualiseit-develop-124040",
-            "StackId": "arn:aws:cloudformation:ap-southeast-2:411851357203:stack/amplify-visualiseit-develop-124040/2d75a420-4f94-11ea-a91a-0a564743ac36",
-            "AmplifyAppId": "d1wr93d1vb3jss"
+            "DeploymentBucketName": "amplify-geovisualiseit-develop-213936-deployment",
+            "UnauthRoleName": "amplify-geovisualiseit-develop-213936-unauthRole",
+            "StackName": "amplify-geovisualiseit-develop-213936",
+            "StackId": "arn:aws:cloudformation:ap-southeast-2:411851357203:stack/amplify-geovisualiseit-develop-213936/f63d3a50-523a-11ea-9aa4-0aefbb6c17f2",
+            "AmplifyAppId": "d3vr23k6amaegh"
         },
         "categories": {
+            "auth": {
+                "geovisualiseit412bd446": {}
+            },
             "function": {
-                "visualiseit903c3202903c3202PostConfirmation": {
+                "geovisualiseit412bd446PostConfirmation": {
                     "GROUP": "user"
                 }
-            },
-            "auth": {
-                "visualiseit903c3202903c3202": {}
             }
         }
     }

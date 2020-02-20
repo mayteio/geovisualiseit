@@ -1,21 +1,21 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
     "Parameters": {
-        "authvisualiseit903c3202903c3202UserPoolId": {
+        "authgeovisualiseit412bd446UserPoolId": {
             "Type": "String",
-            "Default": "authvisualiseit903c3202903c3202UserPoolId"
+            "Default": "authgeovisualiseit412bd446UserPoolId"
         },
-        "authvisualiseit903c3202903c3202IdentityPoolId": {
+        "authgeovisualiseit412bd446IdentityPoolId": {
             "Type": "String",
-            "Default": "authvisualiseit903c3202903c3202IdentityPoolId"
+            "Default": "authgeovisualiseit412bd446IdentityPoolId"
         },
-        "authvisualiseit903c3202903c3202AppClientID": {
+        "authgeovisualiseit412bd446AppClientID": {
             "Type": "String",
-            "Default": "authvisualiseit903c3202903c3202AppClientID"
+            "Default": "authgeovisualiseit412bd446AppClientID"
         },
-        "authvisualiseit903c3202903c3202AppClientIDWeb": {
+        "authgeovisualiseit412bd446AppClientIDWeb": {
             "Type": "String",
-            "Default": "authvisualiseit903c3202903c3202AppClientIDWeb"
+            "Default": "authgeovisualiseit412bd446AppClientIDWeb"
         },
         "AuthRoleArn": {
             "Type": "String"
@@ -51,7 +51,7 @@
                 ]
               },
               "UserPoolId" : {
-                "Ref": "authvisualiseit903c3202903c3202UserPoolId"
+                "Ref": "authgeovisualiseit412bd446UserPoolId"
               } 
             }
         },
@@ -63,55 +63,9 @@
                         "",
                         [
                           {
-                            "Ref": "authvisualiseit903c3202903c3202UserPoolId"
+                            "Ref": "authgeovisualiseit412bd446UserPoolId"
                           },
                           "-adminGroupRole"
-                        ]
-                    ]
-                },
-                "AssumeRolePolicyDocument": {
-                    "Version": "2012-10-17",
-                    "Statement": [
-                        {
-                            "Sid": "",
-                            "Effect": "Allow",
-                            "Principal": {
-                                "Federated": "cognito-identity.amazonaws.com"
-                            },
-                            "Action": "sts:AssumeRoleWithWebIdentity"
-                        }
-                    ]
-                }
-            }
-        },
-    
-        "editorGroup": {
-          "Type" : "AWS::Cognito::UserPoolGroup",
-          "Properties" : {
-              "GroupName" : "editor",
-              "Precedence" : 2,
-              "RoleArn" : {
-                "Fn::GetAtt": [
-                    "editorGroupRole",
-                    "Arn"
-                ]
-              },
-              "UserPoolId" : {
-                "Ref": "authvisualiseit903c3202903c3202UserPoolId"
-              } 
-            }
-        },
-        "editorGroupRole": {
-            "Type": "AWS::IAM::Role",
-            "Properties": {
-                "RoleName":{
-                    "Fn::Join": [
-                        "",
-                        [
-                          {
-                            "Ref": "authvisualiseit903c3202903c3202UserPoolId"
-                          },
-                          "-editorGroupRole"
                         ]
                     ]
                 },
@@ -135,7 +89,7 @@
           "Type" : "AWS::Cognito::UserPoolGroup",
           "Properties" : {
               "GroupName" : "user",
-              "Precedence" : 3,
+              "Precedence" : 2,
               "RoleArn" : {
                 "Fn::GetAtt": [
                     "userGroupRole",
@@ -143,7 +97,7 @@
                 ]
               },
               "UserPoolId" : {
-                "Ref": "authvisualiseit903c3202903c3202UserPoolId"
+                "Ref": "authgeovisualiseit412bd446UserPoolId"
               } 
             }
         },
@@ -155,7 +109,7 @@
                         "",
                         [
                           {
-                            "Ref": "authvisualiseit903c3202903c3202UserPoolId"
+                            "Ref": "authgeovisualiseit412bd446UserPoolId"
                           },
                           "-userGroupRole"
                         ]
@@ -192,7 +146,7 @@
                                 "",
                                 [
                                   
-                                  "visualiseit903c3202903c3202",
+                                  "geovisualiseit412bd446",
                                   "-ExecutionRole-",
                                   {
                                     "Ref": "env"
@@ -351,16 +305,16 @@
                     "Ref": "UnauthRoleArn"
                 },
                 "identityPoolId": {
-                    "Ref": "authvisualiseit903c3202903c3202IdentityPoolId"
+                    "Ref": "authgeovisualiseit412bd446IdentityPoolId"
                 },
                 "userPoolId": {
-                    "Ref": "authvisualiseit903c3202903c3202UserPoolId"
+                    "Ref": "authgeovisualiseit412bd446UserPoolId"
                 },
                 "appClientIDWeb": {
-                    "Ref": "authvisualiseit903c3202903c3202AppClientIDWeb"
+                    "Ref": "authgeovisualiseit412bd446AppClientIDWeb"
                 },
                 "appClientID": {
-                    "Ref": "authvisualiseit903c3202903c3202AppClientID"
+                    "Ref": "authgeovisualiseit412bd446AppClientID"
                 },
                 "region": {
                     "Ref": "AWS::Region"
@@ -378,17 +332,6 @@
             "Value": {
                 "Fn::GetAtt": [
                     "adminGroupRole",
-                    "Arn"
-                ]
-            }
-         
-        },
-        
-      
-        "editorGroupRole": {
-            "Value": {
-                "Fn::GetAtt": [
-                    "editorGroupRole",
                     "Arn"
                 ]
             }

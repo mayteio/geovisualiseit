@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Box,
   Button,
@@ -12,42 +12,70 @@ import {
   makeStyles,
   Theme,
   IconButton,
-  CircularProgress,
-} from '@material-ui/core';
-import Storage from '@aws-amplify/storage';
-import styled from 'styled-components';
-import { Formik } from 'formik';
-import * as Yup from 'yup';
-import { useUser } from '../auth/AuthenticationProvider';
-import { useDispatch, useSelector } from 'react-redux';
-import { setLoginOpen, setEditorOpen } from '../common/appState';
-import { useSnackbar } from 'notistack';
-import CloseIcon from '@material-ui/icons/CloseRounded';
-import uuid from 'uuid/v4';
-import slugify from 'slugify';
+  CircularProgress
+} from "@material-ui/core";
+import Storage from "@aws-amplify/storage";
+import styled from "styled-components";
+import { Formik } from "formik";
+import * as Yup from "yup";
+import { useUser } from "../auth/AuthenticationProvider";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoginOpen, setEditorOpen } from "../common/appState";
+import { useSnackbar } from "notistack";
+import CloseIcon from "@material-ui/icons/CloseRounded";
+import uuid from "uuid/v4";
+import slugify from "slugify";
+import config from "../aws-exports";
 
-import KeplerGlSchema from 'kepler.gl/schemas';
-import { RootState } from '../Store';
+import KeplerGlSchema from "kepler.gl/schemas";
+import { RootState } from "../Store";
+import { useMutation } from "@apollo/react-hooks";
+import { gql } from "apollo-boost";
+import {
+  CreateVisualisationMutationVariables,
+  CreateConfigMutationVariables,
+  CreateDatasetMutationVariables
+} from "../API";
+import { useHistory } from "react-router-dom";
+
+const {
+  aws_user_files_s3_bucket_region: region,
+  aws_user_files_s3_bucket: bucket
+} = config;
 
 const useStyles = makeStyles((theme: Theme) => ({
   closeButton: {
-    position: 'absolute',
+    position: "absolute",
     right: theme.spacing(1),
     top: theme.spacing(1),
-    color: theme.palette.grey[500],
-  },
+    color: theme.palette.grey[500]
+  }
 }));
+
+/**
+ * This file contains:
+ * - Formik code
+ *  - get config/datasets to save
+ *  - put storage items
+ *  - create visualisation mutation
+ *  - create config mutations
+ *  - create datasets mutations
+ * - Panel header form
+ * - Dialog with full form
+ * - Mutation tags
+ * - mutation result types
+ */
 
 export const DetailsForm = () => {
   const user = useUser();
   const dispatch = useDispatch();
-  const { enqueueSnackbar } = useSnackbar();
   // @ts-ignore
   const { editorDialogOpen } = useSelector<RootState>(s => s.app);
 
   // @ts-ignore
   const { exportImage } = useSelector(s => s.keplerGl.editor.uiState);
 
+  const { enqueueSnackbar } = useSnackbar();
   const handleSimpleFormSubmit = (e: any) => {
     e.preventDefault();
     if (user) {
@@ -59,18 +87,42 @@ export const DetailsForm = () => {
     dispatch(setLoginOpen(true));
   };
 
-  const keplerState = useSelector<RootState>(s => (s.keplerGl as any).editor);
+  // @ts-ignore
+  const keplerState = useSelector<RootState>(s => s.keplerGl.editor);
 
   const classes = useStyles();
 
+  // get mutation operations
+  const [createVisualisation] = useMutation<
+    CreateVisualisationResult,
+    CreateVisualisationMutationVariables
+  >(createVisualisationTag);
+
+  const [createConfig] = useMutation<
+    CreateConfigResult,
+    CreateConfigMutationVariables
+  >(createConfigTag);
+  const [createDataset] = useMutation<
+    CreateDatasetResult,
+    CreateDatasetMutationVariables
+  >(createDatasetTag);
+
+  // for success
+  const history = useHistory();
+
   return (
     <Formik
-      initialValues={{ name: 'Test', description: 'description', isPublic: true, password: '' }}
+      initialValues={{
+        name: "Test",
+        description: "description",
+        isPublic: true,
+        password: ""
+      }}
       validationSchema={Yup.object().shape({
         name: Yup.string().required(),
         description: Yup.string(),
         isPublic: Yup.boolean(),
-        password: Yup.string(),
+        password: Yup.string()
       })}
       onSubmit={async ({ name, description, isPublic }, { setSubmitting }) => {
         try {
@@ -78,52 +130,108 @@ export const DetailsForm = () => {
 
           const dataToSave = KeplerGlSchema.getDatasetToSave(keplerState);
           const configToSave = KeplerGlSchema.getConfigToSave(keplerState);
-          const blobToSave = new Blob([exportImage.dataUri], { type: 'image/png' });
+          const blobToSave = new Blob([exportImage.dataUri], {
+            type: "image/png"
+          });
 
           // push all the files to amplify
           const [image, config, ...datasets] = await Promise.all([
-            Storage.put(`${slugify(name, { lower: true })}-thumbnail-${uuid()}.png`, blobToSave, {
-              level: 'protected',
-              contentType: 'image/png',
-            }),
+            Storage.put(
+              `${slugify(name, { lower: true })}-thumbnail-${uuid()}.png`,
+              blobToSave,
+              {
+                level: "protected",
+                contentType: "image/png"
+              }
+            ),
             Storage.put(
               `${slugify(name, { lower: true })}-config-${uuid()}.json`,
               JSON.stringify(configToSave),
               {
-                level: 'protected',
-                contentType: 'application/json',
+                level: "protected",
+                contentType: "application/json"
               }
             ),
             ...dataToSave.map((dataset: any) =>
-              Storage.put(`${uuid()}-${dataset.data.label}`, JSON.stringify(dataset), {
-                level: 'protected',
-                contentType: dataset.data.label.includes('json') ? 'application/json' : 'text/csv',
-              })
-            ),
+              Storage.put(
+                `${dataset.data.label}-kepler-dataset-${uuid()}.json`,
+                JSON.stringify(dataset),
+                {
+                  level: "protected",
+                  contentType: "application/json"
+                }
+              )
+            )
           ]);
 
-          console.log(image, config, datasets);
+          // first we create the visualisation
+          const visualisationResult = await createVisualisation({
+            variables: {
+              input: {
+                title: name,
+                description,
+                image: { ...image, region, bucket }
+              }
+            }
+          });
 
-          const input = {
-            title: name,
-            description,
-            datasets: datasets.map((s3Object, index) => ({
-              title: dataToSave[index].data.label,
-              file: s3Object,
-            })),
-            image,
-            config: {
-              file: config,
-            },
-          };
+          // then we create the config and pass in the vis ID
+          const createConfigMutation = await createConfig({
+            variables: {
+              input: {
+                file: { ...config, region, bucket },
+                configVisualisationId:
+                  visualisationResult.data?.createVisualisation.id
+              }
+            }
+          });
 
-          console.log(input);
+          // then we create the datasets and pass in the vis ID
+          const datasetsMutations = await Promise.all(
+            datasets.map((s3Object, index) =>
+              createDataset({
+                variables: {
+                  input: {
+                    datasetVisualisationId:
+                      visualisationResult.data?.createVisualisation.id,
+                    title: dataToSave[index].data.label,
+                    file: { ...s3Object, region, bucket }
+                  }
+                }
+              })
+            )
+          );
 
-          // https://aws-amplify.github.io/docs/js/storage#amazon-s3-bucket-cors-policy-setup
-        } catch (error) {}
+          // and when all the promises are resolved
+          // this could be done in parallel.
+          // const [configResult, ...datasetsResults] = await Promise.all([
+          //   createConfigMutation, ...datasetsMutations
+          // ]);
+
+          // Then we're done!
+          enqueueSnackbar("Visualisation saved!", { variant: "success" });
+          history.push(
+            `/v/${visualisationResult.data?.createVisualisation.id}/share`
+          );
+          console.log(
+            createConfigMutation,
+            datasetsMutations,
+            visualisationResult
+          );
+        } catch (error) {
+          console.log("error creating vis", error);
+        }
       }}
     >
-      {({ values, errors, touched, handleSubmit, handleChange, handleBlur, isSubmitting }) => (
+      {({
+        values,
+        errors,
+        touched,
+        handleSubmit,
+        handleChange,
+        handleBlur,
+        isSubmitting
+      }) => (
         <>
           <NoBoxSizing>
             <form onSubmit={handleSimpleFormSubmit}>
@@ -134,7 +242,7 @@ export const DetailsForm = () => {
                     value={values.name}
                     name="name"
                     onChange={handleChange}
-                    style={{ width: '100%' }}
+                    style={{ width: "100%" }}
                   />
                 </Box>
                 <Box display="flex" alignItems="flex-end">
@@ -186,7 +294,7 @@ export const DetailsForm = () => {
                       value={values.name}
                       onChange={handleChange}
                       name="name"
-                      style={{ width: '100%' }}
+                      style={{ width: "100%" }}
                       fullWidth
                     />
                   </Box>
@@ -249,3 +357,44 @@ const NoBoxSizing = styled.div`
     box-sizing: initial !important;
   }
 `;
+
+const createVisualisationTag = gql`
+  mutation CreateVisualisation($input: CreateVisualisationInput!) {
+    createVisualisation(input: $input) {
+      title
+      id
+    }
+  }
+`;
+
+const createConfigTag = gql`
+  mutation CreateConfig($input: CreateConfigInput!) {
+    createConfig(input: $input) {
+      id
+    }
+  }
+`;
+const createDatasetTag = gql`
+  mutation CreateDataset($input: CreateDatasetInput!) {
+    createDataset(input: $input) {
+      id
+    }
+  }
+`;
+
+type CreateVisualisationResult = {
+  createVisualisation: {
+    title: string;
+    id: string;
+  };
+};
+type CreateConfigResult = {
+  createConfig: {
+    id: string;
+  };
+};
+type CreateDatasetResult = {
+  createDataset: {
+    id: string;
+  };
+};

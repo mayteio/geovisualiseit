@@ -1,14 +1,14 @@
 projects:
-  visualiseit:
+  geovisualiseit:
     schemaPath: src/graphql/schema.json
     includes:
-      - src/__generated__/*
+      - src/graphql/**/*.ts
     excludes:
       - ./amplify/**
     extensions:
       amplify:
         codeGenTarget: typescript
-        generatedFileName: src/__generated__/apiTypes.ts
+        generatedFileName: src/API.ts
         docsFilePath: src/graphql
 extensions:
   amplify:
