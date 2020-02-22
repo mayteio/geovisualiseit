@@ -1,24 +1,24 @@
 {
     "develop": {
         "awscloudformation": {
-            "AuthRoleName": "amplify-geovisualiseit-develop-213936-authRole",
-            "UnauthRoleArn": "arn:aws:iam::411851357203:role/amplify-geovisualiseit-develop-213936-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::411851357203:role/amplify-geovisualiseit-develop-213936-authRole",
+            "AuthRoleName": "amplify-geovisualiseit-develop-185035-authRole",
+            "UnauthRoleArn": "arn:aws:iam::411851357203:role/amplify-geovisualiseit-develop-185035-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::411851357203:role/amplify-geovisualiseit-develop-185035-authRole",
             "Region": "ap-southeast-2",
-            "DeploymentBucketName": "amplify-geovisualiseit-develop-213936-deployment",
-            "UnauthRoleName": "amplify-geovisualiseit-develop-213936-unauthRole",
-            "StackName": "amplify-geovisualiseit-develop-213936",
-            "StackId": "arn:aws:cloudformation:ap-southeast-2:411851357203:stack/amplify-geovisualiseit-develop-213936/f63d3a50-523a-11ea-9aa4-0aefbb6c17f2",
-            "AmplifyAppId": "d3vr23k6amaegh"
+            "DeploymentBucketName": "amplify-geovisualiseit-develop-185035-deployment",
+            "UnauthRoleName": "amplify-geovisualiseit-develop-185035-unauthRole",
+            "StackName": "amplify-geovisualiseit-develop-185035",
+            "StackId": "arn:aws:cloudformation:ap-southeast-2:411851357203:stack/amplify-geovisualiseit-develop-185035/0e1ba340-5548-11ea-87a2-026f52927b4e",
+            "AmplifyAppId": "d2ymb34qe5vcp8"
         },
         "categories": {
-            "auth": {
-                "geovisualiseit412bd446": {}
-            },
             "function": {
-                "geovisualiseit412bd446PostConfirmation": {
+                "geovisualiseita02e7802a02e7802PostConfirmation": {
                     "GROUP": "user"
                 }
+            },
+            "auth": {
+                "geovisualiseita02e7802a02e7802": {}
             }
         }
     }

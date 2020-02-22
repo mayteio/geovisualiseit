@@ -90,8 +90,6 @@ export const DetailsForm = () => {
   // @ts-ignore
   const keplerState = useSelector<RootState>(s => s.keplerGl.editor);
 
-  const classes = useStyles();
-
   // get mutation operations
   const [createVisualisation] = useMutation<
     CreateVisualisationResult,
@@ -108,6 +106,7 @@ export const DetailsForm = () => {
   >(createDatasetTag);
 
   // for success
+  const classes = useStyles();
   const history = useHistory();
 
   return (
@@ -137,27 +136,31 @@ export const DetailsForm = () => {
           // push all the files to amplify
           const [image, config, ...datasets] = await Promise.all([
             Storage.put(
-              `${slugify(name, { lower: true })}-thumbnail-${uuid()}.png`,
+              `images/${slugify(name, {
+                lower: true
+              })}-thumbnail-${uuid()}.png`,
               blobToSave,
               {
-                level: "protected",
+                // level: "protected",
                 contentType: "image/png"
               }
             ),
             Storage.put(
-              `${slugify(name, { lower: true })}-config-${uuid()}.json`,
+              `configs/${slugify(name, {
+                lower: true
+              })}-config-${uuid()}.json`,
               JSON.stringify(configToSave),
               {
-                level: "protected",
+                // level: "protected",
                 contentType: "application/json"
               }
             ),
             ...dataToSave.map((dataset: any) =>
               Storage.put(
-                `${dataset.data.label}-kepler-dataset-${uuid()}.json`,
+                `datasets/${dataset.data.label}-kepler-dataset-${uuid()}.json`,
                 JSON.stringify(dataset),
                 {
-                  level: "protected",
+                  // level: "protected",
                   contentType: "application/json"
                 }
               )
@@ -170,13 +173,16 @@ export const DetailsForm = () => {
               input: {
                 title: name,
                 description,
-                image: { ...image, region, bucket }
+                image: { ...image, region, bucket },
+                // @ts-ignore
+                visualisationUserId: user?.attributes?.sub
               }
             }
           });
 
           // then we create the config and pass in the vis ID
-          const createConfigMutation = await createConfig({
+          // const createConfigMutation =
+          await createConfig({
             variables: {
               input: {
                 file: { ...config, region, bucket },
@@ -187,7 +193,8 @@ export const DetailsForm = () => {
           });
 
           // then we create the datasets and pass in the vis ID
-          const datasetsMutations = await Promise.all(
+          // const datasetsMutations =
+          await Promise.all(
             datasets.map((s3Object, index) =>
               createDataset({
                 variables: {
@@ -212,11 +219,6 @@ export const DetailsForm = () => {
           enqueueSnackbar("Visualisation saved!", { variant: "success" });
           history.push(
             `/v/${visualisationResult.data?.createVisualisation.id}/share`
-          );
-          console.log(
-            createConfigMutation,
-            datasetsMutations,
-            visualisationResult
           );
         } catch (error) {
           console.log("error creating vis", error);

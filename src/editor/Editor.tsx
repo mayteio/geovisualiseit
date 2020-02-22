@@ -37,7 +37,6 @@ export const Editor = () => {
               mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_API_ACCESS_KEY}
               width={width}
               height={height}
-              theme={keplerTheme}
             />
           </ScreenshotContainer>
         </Box>

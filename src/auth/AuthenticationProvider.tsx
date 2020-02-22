@@ -1,20 +1,20 @@
-import React, { useEffect, useState, useContext } from 'react';
-import Auth, { AuthClass } from '@aws-amplify/auth';
-import { Hub } from '@aws-amplify/core';
-import { HubCapsule } from '@aws-amplify/core/lib-esm/Hub';
-import { CognitoUser } from 'amazon-cognito-identity-js';
-import { SignupDialog } from './SignupDialog';
+import React, { useEffect, useState, useContext } from "react";
+import Auth, { AuthClass } from "@aws-amplify/auth";
+import { Hub } from "@aws-amplify/core";
+import { HubCapsule } from "@aws-amplify/core/lib-esm/Hub";
+import { CognitoUser } from "amazon-cognito-identity-js";
+import { SignupDialog } from "./SignupDialog";
 
 const AuthentiationContext = React.createContext<
   | {
-      signIn: AuthClass['signIn'];
-      signUp: AuthClass['signUp'];
-      resendSignUp: AuthClass['resendSignUp'];
-      confirmSignUp: AuthClass['confirmSignUp'];
-      signOut: AuthClass['signOut'];
-      forgotPassword: AuthClass['forgotPassword'];
-      changePassword: AuthClass['changePassword'];
-      completeNewPassword: AuthClass['completeNewPassword'];
+      signIn: AuthClass["signIn"];
+      signUp: AuthClass["signUp"];
+      resendSignUp: AuthClass["resendSignUp"];
+      confirmSignUp: AuthClass["confirmSignUp"];
+      signOut: AuthClass["signOut"];
+      forgotPassword: AuthClass["forgotPassword"];
+      changePassword: AuthClass["changePassword"];
+      completeNewPassword: AuthClass["completeNewPassword"];
     }
   | undefined
 >(undefined);
@@ -33,7 +33,7 @@ export const AuthenticationProvider: React.FC = ({ children }) => {
     (async () => {
       try {
         const user = await Auth.currentAuthenticatedUser();
-        setUser(user === 'not authenticated' ? undefined : user);
+        setUser(user === "not authenticated" ? undefined : user);
       } catch (error) {
         // trackBug(error)
       }
@@ -41,22 +41,22 @@ export const AuthenticationProvider: React.FC = ({ children }) => {
 
     // bind hub listener for auth changes
     const listener = async ({ payload }: HubCapsule) => {
-      if (payload.event === 'signIn') {
+      if (payload.event === "signIn") {
         try {
           const user = await Auth.currentAuthenticatedUser();
           setUser(user);
         } catch (error) {
           // trackBug(error)
         }
-      } else if (payload.event === 'signOut') {
+      } else if (payload.event === "signOut") {
         setUser(undefined);
       }
     };
-    Hub.listen('auth', listener);
+    Hub.listen("auth", listener);
 
     // clean up hub listener
     return () => {
-      Hub.remove('auth', listener);
+      Hub.remove("auth", listener);
     };
   }, []);
 
@@ -74,7 +74,7 @@ export function useAuth() {
   const context = useContext(AuthentiationContext);
   if (!context)
     throw Error(
-      'No AuthenticationContext. Did you forget to wrap your app in <AuthenticationProvider />?'
+      "No AuthenticationContext. Did you forget to wrap your app in <AuthenticationProvider />?"
     );
   return context;
 }

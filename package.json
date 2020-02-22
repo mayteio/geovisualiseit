@@ -28,6 +28,9 @@
     "uuid": "^3.4.0",
     "yup": "^0.28.1"
   },
+  "resolutions": {
+    "apollo-client": "2.6.3"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

@@ -31,7 +31,6 @@ type Visualisation
 
   # future features
   # password: String
-  # mapState: MapState
   # location: Location
   # comments: [Comment] @connection(name: "VisualisationComments")
   # tags: [VisualisationTags] @connection(name: "VisualisationTags")

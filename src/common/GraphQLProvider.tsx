@@ -47,8 +47,6 @@ export const GraphQLProvider: React.FC = ({ children }) => {
   const user = useUser();
   const [client, set] = useState<any>(createClient());
 
-  console.log(user);
-
   // listen for user changes and set client
   useEffect(() => {
     set(createClient());

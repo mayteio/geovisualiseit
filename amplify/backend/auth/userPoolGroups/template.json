@@ -1,21 +1,21 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
     "Parameters": {
-        "authgeovisualiseit412bd446UserPoolId": {
+        "authgeovisualiseita02e7802a02e7802UserPoolId": {
             "Type": "String",
-            "Default": "authgeovisualiseit412bd446UserPoolId"
+            "Default": "authgeovisualiseita02e7802a02e7802UserPoolId"
         },
-        "authgeovisualiseit412bd446IdentityPoolId": {
+        "authgeovisualiseita02e7802a02e7802IdentityPoolId": {
             "Type": "String",
-            "Default": "authgeovisualiseit412bd446IdentityPoolId"
+            "Default": "authgeovisualiseita02e7802a02e7802IdentityPoolId"
         },
-        "authgeovisualiseit412bd446AppClientID": {
+        "authgeovisualiseita02e7802a02e7802AppClientID": {
             "Type": "String",
-            "Default": "authgeovisualiseit412bd446AppClientID"
+            "Default": "authgeovisualiseita02e7802a02e7802AppClientID"
         },
-        "authgeovisualiseit412bd446AppClientIDWeb": {
+        "authgeovisualiseita02e7802a02e7802AppClientIDWeb": {
             "Type": "String",
-            "Default": "authgeovisualiseit412bd446AppClientIDWeb"
+            "Default": "authgeovisualiseita02e7802a02e7802AppClientIDWeb"
         },
         "AuthRoleArn": {
             "Type": "String"
@@ -51,7 +51,7 @@
                 ]
               },
               "UserPoolId" : {
-                "Ref": "authgeovisualiseit412bd446UserPoolId"
+                "Ref": "authgeovisualiseita02e7802a02e7802UserPoolId"
               } 
             }
         },
@@ -63,7 +63,7 @@
                         "",
                         [
                           {
-                            "Ref": "authgeovisualiseit412bd446UserPoolId"
+                            "Ref": "authgeovisualiseita02e7802a02e7802UserPoolId"
                           },
                           "-adminGroupRole"
                         ]
@@ -97,7 +97,7 @@
                 ]
               },
               "UserPoolId" : {
-                "Ref": "authgeovisualiseit412bd446UserPoolId"
+                "Ref": "authgeovisualiseita02e7802a02e7802UserPoolId"
               } 
             }
         },
@@ -109,7 +109,7 @@
                         "",
                         [
                           {
-                            "Ref": "authgeovisualiseit412bd446UserPoolId"
+                            "Ref": "authgeovisualiseita02e7802a02e7802UserPoolId"
                           },
                           "-userGroupRole"
                         ]
@@ -146,7 +146,7 @@
                                 "",
                                 [
                                   
-                                  "geovisualiseit412bd446",
+                                  "geovisualiseita02e7802a02e7802",
                                   "-ExecutionRole-",
                                   {
                                     "Ref": "env"
@@ -305,16 +305,16 @@
                     "Ref": "UnauthRoleArn"
                 },
                 "identityPoolId": {
-                    "Ref": "authgeovisualiseit412bd446IdentityPoolId"
+                    "Ref": "authgeovisualiseita02e7802a02e7802IdentityPoolId"
                 },
                 "userPoolId": {
-                    "Ref": "authgeovisualiseit412bd446UserPoolId"
+                    "Ref": "authgeovisualiseita02e7802a02e7802UserPoolId"
                 },
                 "appClientIDWeb": {
-                    "Ref": "authgeovisualiseit412bd446AppClientIDWeb"
+                    "Ref": "authgeovisualiseita02e7802a02e7802AppClientIDWeb"
                 },
                 "appClientID": {
-                    "Ref": "authgeovisualiseit412bd446AppClientID"
+                    "Ref": "authgeovisualiseita02e7802a02e7802AppClientID"
                 },
                 "region": {
                     "Ref": "AWS::Region"

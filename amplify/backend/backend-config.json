@@ -1,28 +1,19 @@
 {
-	"auth": {
-		"geovisualiseit412bd446": {
-			"service": "Cognito",
+	"function": {
+		"geovisualiseita02e7802a02e7802PostConfirmation": {
+			"service": "Lambda",
 			"providerPlugin": "awscloudformation",
-			"dependsOn": [
-				{
-					"category": "function",
-					"resourceName": "geovisualiseit412bd446PostConfirmation",
-					"triggerProvider": "Cognito",
-					"attributes": [
-						"Arn",
-						"Name"
-					]
-				}
-			],
-			"customAuth": false
-		},
+			"build": true
+		}
+	},
+	"auth": {
 		"userPoolGroups": {
 			"service": "Cognito-UserPool-Groups",
 			"providerPlugin": "awscloudformation",
 			"dependsOn": [
 				{
 					"category": "auth",
-					"resourceName": "geovisualiseit412bd446",
+					"resourceName": "geovisualiseita02e7802a02e7802",
 					"attributes": [
 						"UserPoolId",
 						"AppClientIDWeb",
@@ -31,12 +22,21 @@
 					]
 				}
 			]
-		}
-	},
-	"storage": {
-		"s3a205d64d": {
-			"service": "S3",
-			"providerPlugin": "awscloudformation"
+		},
+		"geovisualiseita02e7802a02e7802": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [
+				{
+					"category": "function",
+					"resourceName": "geovisualiseita02e7802a02e7802PostConfirmation",
+					"triggerProvider": "Cognito",
+					"attributes": [
+						"Arn",
+						"Name"
+					]
+				}
+			]
 		}
 	},
 	"api": {
@@ -49,7 +49,7 @@
 						{
 							"authenticationType": "API_KEY",
 							"apiKeyConfig": {
-								"description": "API Key",
+								"description": "api",
 								"apiKeyExpirationDays": "365"
 							}
 						}
@@ -57,18 +57,17 @@
 					"defaultAuthentication": {
 						"authenticationType": "AMAZON_COGNITO_USER_POOLS",
 						"userPoolConfig": {
-							"userPoolId": "authgeovisualiseit412bd446"
+							"userPoolId": "authgeovisualiseita02e7802a02e7802"
 						}
 					}
 				}
 			}
 		}
 	},
-	"function": {
-		"geovisualiseit412bd446PostConfirmation": {
-			"service": "Lambda",
-			"providerPlugin": "awscloudformation",
-			"build": true
+	"storage": {
+		"s343430011": {
+			"service": "S3",
+			"providerPlugin": "awscloudformation"
 		}
 	}
 }

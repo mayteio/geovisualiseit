@@ -2,16 +2,16 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type CreateProfileInput = {
+export type CreateUserInput = {
   id?: string | null,
-  title: string,
+  username: string,
 };
 
-export type ModelProfileConditionInput = {
-  title?: ModelStringInput | null,
-  and?: Array< ModelProfileConditionInput | null > | null,
-  or?: Array< ModelProfileConditionInput | null > | null,
-  not?: ModelProfileConditionInput | null,
+export type ModelUserConditionInput = {
+  username?: ModelStringInput | null,
+  and?: Array< ModelUserConditionInput | null > | null,
+  or?: Array< ModelUserConditionInput | null > | null,
+  not?: ModelUserConditionInput | null,
 };
 
 export type ModelStringInput = {
@@ -54,12 +54,12 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
-export type UpdateProfileInput = {
+export type UpdateUserInput = {
   id: string,
-  title?: string | null,
+  username?: string | null,
 };
 
-export type DeleteProfileInput = {
+export type DeleteUserInput = {
   id?: string | null,
 };
 
@@ -68,6 +68,7 @@ export type CreateVisualisationInput = {
   title: string,
   description?: string | null,
   image?: S3ObjectInput | null,
+  visualisationUserId?: string | null,
   visualisationConfigId?: string | null,
 };
 
@@ -90,6 +91,7 @@ export type UpdateVisualisationInput = {
   title?: string | null,
   description?: string | null,
   image?: S3ObjectInput | null,
+  visualisationUserId?: string | null,
   visualisationConfigId?: string | null,
 };
 
@@ -144,12 +146,12 @@ export type DeleteDatasetInput = {
   id?: string | null,
 };
 
-export type ModelProfileFilterInput = {
+export type ModelUserFilterInput = {
   id?: ModelIDInput | null,
-  title?: ModelStringInput | null,
-  and?: Array< ModelProfileFilterInput | null > | null,
-  or?: Array< ModelProfileFilterInput | null > | null,
-  not?: ModelProfileFilterInput | null,
+  username?: ModelStringInput | null,
+  and?: Array< ModelUserFilterInput | null > | null,
+  or?: Array< ModelUserFilterInput | null > | null,
+  not?: ModelUserFilterInput | null,
 };
 
 export type ModelIDInput = {
@@ -192,44 +194,77 @@ export type ModelDatasetFilterInput = {
   not?: ModelDatasetFilterInput | null,
 };
 
-export type CreateProfileMutationVariables = {
-  input: CreateProfileInput,
-  condition?: ModelProfileConditionInput | null,
+export type CreateUserMutationVariables = {
+  input: CreateUserInput,
+  condition?: ModelUserConditionInput | null,
 };
 
-export type CreateProfileMutation = {
-  createProfile:  {
-    __typename: "Profile",
+export type CreateUserMutation = {
+  createUser:  {
+    __typename: "User",
     id: string,
-    title: string,
+    username: string,
+    visualisations:  {
+      __typename: "ModelVisualisationConnection",
+      items:  Array< {
+        __typename: "Visualisation",
+        id: string,
+        title: string,
+        description: string | null,
+        owner: string | null,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     owner: string | null,
   } | null,
 };
 
-export type UpdateProfileMutationVariables = {
-  input: UpdateProfileInput,
-  condition?: ModelProfileConditionInput | null,
+export type UpdateUserMutationVariables = {
+  input: UpdateUserInput,
+  condition?: ModelUserConditionInput | null,
 };
 
-export type UpdateProfileMutation = {
-  updateProfile:  {
-    __typename: "Profile",
+export type UpdateUserMutation = {
+  updateUser:  {
+    __typename: "User",
     id: string,
-    title: string,
+    username: string,
+    visualisations:  {
+      __typename: "ModelVisualisationConnection",
+      items:  Array< {
+        __typename: "Visualisation",
+        id: string,
+        title: string,
+        description: string | null,
+        owner: string | null,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     owner: string | null,
   } | null,
 };
 
-export type DeleteProfileMutationVariables = {
-  input: DeleteProfileInput,
-  condition?: ModelProfileConditionInput | null,
+export type DeleteUserMutationVariables = {
+  input: DeleteUserInput,
+  condition?: ModelUserConditionInput | null,
 };
 
-export type DeleteProfileMutation = {
-  deleteProfile:  {
-    __typename: "Profile",
+export type DeleteUserMutation = {
+  deleteUser:  {
+    __typename: "User",
     id: string,
-    title: string,
+    username: string,
+    visualisations:  {
+      __typename: "ModelVisualisationConnection",
+      items:  Array< {
+        __typename: "Visualisation",
+        id: string,
+        title: string,
+        description: string | null,
+        owner: string | null,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     owner: string | null,
   } | null,
 };
@@ -245,6 +280,16 @@ export type CreateVisualisationMutation = {
     id: string,
     title: string,
     description: string | null,
+    user:  {
+      __typename: "User",
+      id: string,
+      username: string,
+      visualisations:  {
+        __typename: "ModelVisualisationConnection",
+        nextToken: string | null,
+      } | null,
+      owner: string | null,
+    } | null,
     config:  {
       __typename: "Config",
       id: string,
@@ -294,6 +339,16 @@ export type UpdateVisualisationMutation = {
     id: string,
     title: string,
     description: string | null,
+    user:  {
+      __typename: "User",
+      id: string,
+      username: string,
+      visualisations:  {
+        __typename: "ModelVisualisationConnection",
+        nextToken: string | null,
+      } | null,
+      owner: string | null,
+    } | null,
     config:  {
       __typename: "Config",
       id: string,
@@ -343,6 +398,16 @@ export type DeleteVisualisationMutation = {
     id: string,
     title: string,
     description: string | null,
+    user:  {
+      __typename: "User",
+      id: string,
+      username: string,
+      visualisations:  {
+        __typename: "ModelVisualisationConnection",
+        nextToken: string | null,
+      } | null,
+      owner: string | null,
+    } | null,
     config:  {
       __typename: "Config",
       id: string,
@@ -395,6 +460,12 @@ export type CreateConfigMutation = {
       id: string,
       title: string,
       description: string | null,
+      user:  {
+        __typename: "User",
+        id: string,
+        username: string,
+        owner: string | null,
+      } | null,
       config:  {
         __typename: "Config",
         id: string,
@@ -436,6 +507,12 @@ export type UpdateConfigMutation = {
       id: string,
       title: string,
       description: string | null,
+      user:  {
+        __typename: "User",
+        id: string,
+        username: string,
+        owner: string | null,
+      } | null,
       config:  {
         __typename: "Config",
         id: string,
@@ -477,6 +554,12 @@ export type DeleteConfigMutation = {
       id: string,
       title: string,
       description: string | null,
+      user:  {
+        __typename: "User",
+        id: string,
+        username: string,
+        owner: string | null,
+      } | null,
       config:  {
         __typename: "Config",
         id: string,
@@ -518,6 +601,12 @@ export type CreateDatasetMutation = {
       id: string,
       title: string,
       description: string | null,
+      user:  {
+        __typename: "User",
+        id: string,
+        username: string,
+        owner: string | null,
+      } | null,
       config:  {
         __typename: "Config",
         id: string,
@@ -560,6 +649,12 @@ export type UpdateDatasetMutation = {
       id: string,
       title: string,
       description: string | null,
+      user:  {
+        __typename: "User",
+        id: string,
+        username: string,
+        owner: string | null,
+      } | null,
       config:  {
         __typename: "Config",
         id: string,
@@ -602,6 +697,12 @@ export type DeleteDatasetMutation = {
       id: string,
       title: string,
       description: string | null,
+      user:  {
+        __typename: "User",
+        id: string,
+        username: string,
+        owner: string | null,
+      } | null,
       config:  {
         __typename: "Config",
         id: string,
@@ -630,32 +731,47 @@ export type DeleteDatasetMutation = {
   } | null,
 };
 
-export type GetProfileQueryVariables = {
+export type GetUserQueryVariables = {
   id: string,
 };
 
-export type GetProfileQuery = {
-  getProfile:  {
-    __typename: "Profile",
+export type GetUserQuery = {
+  getUser:  {
+    __typename: "User",
     id: string,
-    title: string,
+    username: string,
+    visualisations:  {
+      __typename: "ModelVisualisationConnection",
+      items:  Array< {
+        __typename: "Visualisation",
+        id: string,
+        title: string,
+        description: string | null,
+        owner: string | null,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     owner: string | null,
   } | null,
 };
 
-export type ListProfilesQueryVariables = {
-  filter?: ModelProfileFilterInput | null,
+export type ListUsersQueryVariables = {
+  filter?: ModelUserFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type ListProfilesQuery = {
-  listProfiles:  {
-    __typename: "ModelProfileConnection",
+export type ListUsersQuery = {
+  listUsers:  {
+    __typename: "ModelUserConnection",
     items:  Array< {
-      __typename: "Profile",
+      __typename: "User",
       id: string,
-      title: string,
+      username: string,
+      visualisations:  {
+        __typename: "ModelVisualisationConnection",
+        nextToken: string | null,
+      } | null,
       owner: string | null,
     } | null > | null,
     nextToken: string | null,
@@ -672,6 +788,16 @@ export type GetVisualisationQuery = {
     id: string,
     title: string,
     description: string | null,
+    user:  {
+      __typename: "User",
+      id: string,
+      username: string,
+      visualisations:  {
+        __typename: "ModelVisualisationConnection",
+        nextToken: string | null,
+      } | null,
+      owner: string | null,
+    } | null,
     config:  {
       __typename: "Config",
       id: string,
@@ -724,6 +850,12 @@ export type ListVisualisationsQuery = {
       id: string,
       title: string,
       description: string | null,
+      user:  {
+        __typename: "User",
+        id: string,
+        username: string,
+        owner: string | null,
+      } | null,
       config:  {
         __typename: "Config",
         id: string,
@@ -758,6 +890,12 @@ export type GetConfigQuery = {
       id: string,
       title: string,
       description: string | null,
+      user:  {
+        __typename: "User",
+        id: string,
+        username: string,
+        owner: string | null,
+      } | null,
       config:  {
         __typename: "Config",
         id: string,
@@ -829,6 +967,12 @@ export type GetDatasetQuery = {
       id: string,
       title: string,
       description: string | null,
+      user:  {
+        __typename: "User",
+        id: string,
+        username: string,
+        owner: string | null,
+      } | null,
       config:  {
         __typename: "Config",
         id: string,
@@ -889,41 +1033,74 @@ export type ListDatasetsQuery = {
   } | null,
 };
 
-export type OnCreateProfileSubscriptionVariables = {
+export type OnCreateUserSubscriptionVariables = {
   owner?: string | null,
 };
 
-export type OnCreateProfileSubscription = {
-  onCreateProfile:  {
-    __typename: "Profile",
+export type OnCreateUserSubscription = {
+  onCreateUser:  {
+    __typename: "User",
     id: string,
-    title: string,
+    username: string,
+    visualisations:  {
+      __typename: "ModelVisualisationConnection",
+      items:  Array< {
+        __typename: "Visualisation",
+        id: string,
+        title: string,
+        description: string | null,
+        owner: string | null,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     owner: string | null,
   } | null,
 };
 
-export type OnUpdateProfileSubscriptionVariables = {
+export type OnUpdateUserSubscriptionVariables = {
   owner?: string | null,
 };
 
-export type OnUpdateProfileSubscription = {
-  onUpdateProfile:  {
-    __typename: "Profile",
+export type OnUpdateUserSubscription = {
+  onUpdateUser:  {
+    __typename: "User",
     id: string,
-    title: string,
+    username: string,
+    visualisations:  {
+      __typename: "ModelVisualisationConnection",
+      items:  Array< {
+        __typename: "Visualisation",
+        id: string,
+        title: string,
+        description: string | null,
+        owner: string | null,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     owner: string | null,
   } | null,
 };
 
-export type OnDeleteProfileSubscriptionVariables = {
+export type OnDeleteUserSubscriptionVariables = {
   owner?: string | null,
 };
 
-export type OnDeleteProfileSubscription = {
-  onDeleteProfile:  {
-    __typename: "Profile",
+export type OnDeleteUserSubscription = {
+  onDeleteUser:  {
+    __typename: "User",
     id: string,
-    title: string,
+    username: string,
+    visualisations:  {
+      __typename: "ModelVisualisationConnection",
+      items:  Array< {
+        __typename: "Visualisation",
+        id: string,
+        title: string,
+        description: string | null,
+        owner: string | null,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     owner: string | null,
   } | null,
 };
@@ -938,6 +1115,16 @@ export type OnCreateVisualisationSubscription = {
     id: string,
     title: string,
     description: string | null,
+    user:  {
+      __typename: "User",
+      id: string,
+      username: string,
+      visualisations:  {
+        __typename: "ModelVisualisationConnection",
+        nextToken: string | null,
+      } | null,
+      owner: string | null,
+    } | null,
     config:  {
       __typename: "Config",
       id: string,
@@ -986,6 +1173,16 @@ export type OnUpdateVisualisationSubscription = {
     id: string,
     title: string,
     description: string | null,
+    user:  {
+      __typename: "User",
+      id: string,
+      username: string,
+      visualisations:  {
+        __typename: "ModelVisualisationConnection",
+        nextToken: string | null,
+      } | null,
+      owner: string | null,
+    } | null,
     config:  {
       __typename: "Config",
       id: string,
@@ -1034,6 +1231,16 @@ export type OnDeleteVisualisationSubscription = {
     id: string,
     title: string,
     description: string | null,
+    user:  {
+      __typename: "User",
+      id: string,
+      username: string,
+      visualisations:  {
+        __typename: "ModelVisualisationConnection",
+        nextToken: string | null,
+      } | null,
+      owner: string | null,
+    } | null,
     config:  {
       __typename: "Config",
       id: string,
@@ -1085,6 +1292,12 @@ export type OnCreateConfigSubscription = {
       id: string,
       title: string,
       description: string | null,
+      user:  {
+        __typename: "User",
+        id: string,
+        username: string,
+        owner: string | null,
+      } | null,
       config:  {
         __typename: "Config",
         id: string,
@@ -1125,6 +1338,12 @@ export type OnUpdateConfigSubscription = {
       id: string,
       title: string,
       description: string | null,
+      user:  {
+        __typename: "User",
+        id: string,
+        username: string,
+        owner: string | null,
+      } | null,
       config:  {
         __typename: "Config",
         id: string,
@@ -1165,6 +1384,12 @@ export type OnDeleteConfigSubscription = {
       id: string,
       title: string,
       description: string | null,
+      user:  {
+        __typename: "User",
+        id: string,
+        username: string,
+        owner: string | null,
+      } | null,
       config:  {
         __typename: "Config",
         id: string,
@@ -1205,6 +1430,12 @@ export type OnCreateDatasetSubscription = {
       id: string,
       title: string,
       description: string | null,
+      user:  {
+        __typename: "User",
+        id: string,
+        username: string,
+        owner: string | null,
+      } | null,
       config:  {
         __typename: "Config",
         id: string,
@@ -1246,6 +1477,12 @@ export type OnUpdateDatasetSubscription = {
       id: string,
       title: string,
       description: string | null,
+      user:  {
+        __typename: "User",
+        id: string,
+        username: string,
+        owner: string | null,
+      } | null,
       config:  {
         __typename: "Config",
         id: string,
@@ -1287,6 +1524,12 @@ export type OnDeleteDatasetSubscription = {
       id: string,
       title: string,
       description: string | null,
+      user:  {
+        __typename: "User",
+        id: string,
+        username: string,
+        owner: string | null,
+      } | null,
       config:  {
         __typename: "Config",
         id: string,

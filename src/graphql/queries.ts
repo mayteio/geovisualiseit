@@ -1,25 +1,37 @@
 // tslint:disable
 // this is an auto generated file. This will be overwritten
 
-export const getProfile = /* GraphQL */ `
-  query GetProfile($id: ID!) {
-    getProfile(id: $id) {
+export const getUser = /* GraphQL */ `
+  query GetUser($id: ID!) {
+    getUser(id: $id) {
       id
-      title
+      username
+      visualisations {
+        items {
+          id
+          title
+          description
+          owner
+        }
+        nextToken
+      }
       owner
     }
   }
 `;
-export const listProfiles = /* GraphQL */ `
-  query ListProfiles(
-    $filter: ModelProfileFilterInput
+export const listUsers = /* GraphQL */ `
+  query ListUsers(
+    $filter: ModelUserFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listProfiles(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        title
+        username
+        visualisations {
+          nextToken
+        }
         owner
       }
       nextToken
@@ -32,6 +44,14 @@ export const getVisualisation = /* GraphQL */ `
       id
       title
       description
+      user {
+        id
+        username
+        visualisations {
+          nextToken
+        }
+        owner
+      }
       config {
         id
         visualisation {
@@ -75,6 +95,11 @@ export const listVisualisations = /* GraphQL */ `
         id
         title
         description
+        user {
+          id
+          username
+          owner
+        }
         config {
           id
           owner
@@ -101,6 +126,11 @@ export const getConfig = /* GraphQL */ `
         id
         title
         description
+        user {
+          id
+          username
+          owner
+        }
         config {
           id
           owner
@@ -158,6 +188,11 @@ export const getDataset = /* GraphQL */ `
         id
         title
         description
+        user {
+          id
+          username
+          owner
+        }
         config {
           id
           owner

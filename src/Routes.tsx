@@ -1,6 +1,8 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { Editor } from "./editor/Editor";
+import { Visualisation } from "./editor/Visualisation";
+import { ShareDialog } from "./editor/ShareDialog";
 
 export const Routes: React.FC = () => {
   return (
@@ -11,7 +13,10 @@ export const Routes: React.FC = () => {
           <Editor />
         </Route>
         <Route path="/v/:visualisationId/edit"></Route>
-        <Route path="/v/:visualisationId"></Route>
+        <Route path="/v/:visualisationId">
+          <Visualisation />
+          <ShareDialog />
+        </Route>
         <Route path="/p/:profileId"></Route>
         <Route path="/p/me"></Route>
         <Route path="/"></Route>

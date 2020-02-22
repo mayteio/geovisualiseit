@@ -1,38 +1,65 @@
 // tslint:disable
 // this is an auto generated file. This will be overwritten
 
-export const createProfile = /* GraphQL */ `
-  mutation CreateProfile(
-    $input: CreateProfileInput!
-    $condition: ModelProfileConditionInput
+export const createUser = /* GraphQL */ `
+  mutation CreateUser(
+    $input: CreateUserInput!
+    $condition: ModelUserConditionInput
   ) {
-    createProfile(input: $input, condition: $condition) {
+    createUser(input: $input, condition: $condition) {
       id
-      title
+      username
+      visualisations {
+        items {
+          id
+          title
+          description
+          owner
+        }
+        nextToken
+      }
       owner
     }
   }
 `;
-export const updateProfile = /* GraphQL */ `
-  mutation UpdateProfile(
-    $input: UpdateProfileInput!
-    $condition: ModelProfileConditionInput
+export const updateUser = /* GraphQL */ `
+  mutation UpdateUser(
+    $input: UpdateUserInput!
+    $condition: ModelUserConditionInput
   ) {
-    updateProfile(input: $input, condition: $condition) {
+    updateUser(input: $input, condition: $condition) {
       id
-      title
+      username
+      visualisations {
+        items {
+          id
+          title
+          description
+          owner
+        }
+        nextToken
+      }
       owner
     }
   }
 `;
-export const deleteProfile = /* GraphQL */ `
-  mutation DeleteProfile(
-    $input: DeleteProfileInput!
-    $condition: ModelProfileConditionInput
+export const deleteUser = /* GraphQL */ `
+  mutation DeleteUser(
+    $input: DeleteUserInput!
+    $condition: ModelUserConditionInput
   ) {
-    deleteProfile(input: $input, condition: $condition) {
+    deleteUser(input: $input, condition: $condition) {
       id
-      title
+      username
+      visualisations {
+        items {
+          id
+          title
+          description
+          owner
+        }
+        nextToken
+      }
       owner
     }
   }
@@ -46,6 +73,14 @@ export const createVisualisation = /* GraphQL */ `
       id
       title
       description
+      user {
+        id
+        username
+        visualisations {
+          nextToken
+        }
+        owner
+      }
       config {
         id
         visualisation {
@@ -87,6 +122,14 @@ export const updateVisualisation = /* GraphQL */ `
       id
       title
       description
+      user {
+        id
+        username
+        visualisations {
+          nextToken
+        }
+        owner
+      }
       config {
         id
         visualisation {
@@ -128,6 +171,14 @@ export const deleteVisualisation = /* GraphQL */ `
       id
       title
       description
+      user {
+        id
+        username
+        visualisations {
+          nextToken
+        }
+        owner
+      }
       config {
         id
         visualisation {
@@ -171,6 +222,11 @@ export const createConfig = /* GraphQL */ `
         id
         title
         description
+        user {
+          id
+          username
+          owner
+        }
         config {
           id
           owner
@@ -205,6 +261,11 @@ export const updateConfig = /* GraphQL */ `
         id
         title
         description
+        user {
+          id
+          username
+          owner
+        }
         config {
           id
           owner
@@ -239,6 +300,11 @@ export const deleteConfig = /* GraphQL */ `
         id
         title
         description
+        user {
+          id
+          username
+          owner
+        }
         config {
           id
           owner
@@ -273,6 +339,11 @@ export const createDataset = /* GraphQL */ `
         id
         title
         description
+        user {
+          id
+          username
+          owner
+        }
         config {
           id
           owner
@@ -308,6 +379,11 @@ export const updateDataset = /* GraphQL */ `
         id
         title
         description
+        user {
+          id
+          username
+          owner
+        }
         config {
           id
           owner
@@ -343,6 +419,11 @@ export const deleteDataset = /* GraphQL */ `
         id
         title
         description
+        user {
+          id
+          username
+          owner
+        }
         config {
           id
           owner

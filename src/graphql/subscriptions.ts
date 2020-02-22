@@ -1,29 +1,56 @@
 // tslint:disable
 // this is an auto generated file. This will be overwritten
 
-export const onCreateProfile = /* GraphQL */ `
-  subscription OnCreateProfile($owner: String) {
-    onCreateProfile(owner: $owner) {
+export const onCreateUser = /* GraphQL */ `
+  subscription OnCreateUser($owner: String) {
+    onCreateUser(owner: $owner) {
       id
-      title
+      username
+      visualisations {
+        items {
+          id
+          title
+          description
+          owner
+        }
+        nextToken
+      }
       owner
     }
   }
 `;
-export const onUpdateProfile = /* GraphQL */ `
-  subscription OnUpdateProfile($owner: String) {
-    onUpdateProfile(owner: $owner) {
+export const onUpdateUser = /* GraphQL */ `
+  subscription OnUpdateUser($owner: String) {
+    onUpdateUser(owner: $owner) {
       id
-      title
+      username
+      visualisations {
+        items {
+          id
+          title
+          description
+          owner
+        }
+        nextToken
+      }
       owner
     }
   }
 `;
-export const onDeleteProfile = /* GraphQL */ `
-  subscription OnDeleteProfile($owner: String) {
-    onDeleteProfile(owner: $owner) {
+export const onDeleteUser = /* GraphQL */ `
+  subscription OnDeleteUser($owner: String) {
+    onDeleteUser(owner: $owner) {
       id
-      title
+      username
+      visualisations {
+        items {
+          id
+          title
+          description
+          owner
+        }
+        nextToken
+      }
       owner
     }
   }
@@ -34,6 +61,14 @@ export const onCreateVisualisation = /* GraphQL */ `
       id
       title
       description
+      user {
+        id
+        username
+        visualisations {
+          nextToken
+        }
+        owner
+      }
       config {
         id
         visualisation {
@@ -72,6 +107,14 @@ export const onUpdateVisualisation = /* GraphQL */ `
       id
       title
       description
+      user {
+        id
+        username
+        visualisations {
+          nextToken
+        }
+        owner
+      }
       config {
         id
         visualisation {
@@ -110,6 +153,14 @@ export const onDeleteVisualisation = /* GraphQL */ `
       id
       title
       description
+      user {
+        id
+        username
+        visualisations {
+          nextToken
+        }
+        owner
+      }
       config {
         id
         visualisation {
@@ -150,6 +201,11 @@ export const onCreateConfig = /* GraphQL */ `
         id
         title
         description
+        user {
+          id
+          username
+          owner
+        }
         config {
           id
           owner
@@ -181,6 +237,11 @@ export const onUpdateConfig = /* GraphQL */ `
         id
         title
         description
+        user {
+          id
+          username
+          owner
+        }
         config {
           id
           owner
@@ -212,6 +273,11 @@ export const onDeleteConfig = /* GraphQL */ `
         id
         title
         description
+        user {
+          id
+          username
+          owner
+        }
         config {
           id
           owner
@@ -243,6 +309,11 @@ export const onCreateDataset = /* GraphQL */ `
         id
         title
         description
+        user {
+          id
+          username
+          owner
+        }
         config {
           id
           owner
@@ -275,6 +346,11 @@ export const onUpdateDataset = /* GraphQL */ `
         id
         title
         description
+        user {
+          id
+          username
+          owner
+        }
         config {
           id
           owner
@@ -307,6 +383,11 @@ export const onDeleteDataset = /* GraphQL */ `
         id
         title
         description
+        user {
+          id
+          username
+          owner
+        }
         config {
           id
           owner
