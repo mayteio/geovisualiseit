@@ -71,16 +71,11 @@ export const onCreateVisualisation = /* GraphQL */ `
       }
       config {
         id
-        visualisation {
-          id
-          title
-          description
-          owner
-        }
         file {
           bucket
           key
           region
+          identityId
         }
         owner
       }
@@ -96,6 +91,7 @@ export const onCreateVisualisation = /* GraphQL */ `
         bucket
         key
         region
+        identityId
       }
       owner
     }
@@ -117,16 +113,11 @@ export const onUpdateVisualisation = /* GraphQL */ `
       }
       config {
         id
-        visualisation {
-          id
-          title
-          description
-          owner
-        }
         file {
           bucket
           key
           region
+          identityId
         }
         owner
       }
@@ -142,6 +133,7 @@ export const onUpdateVisualisation = /* GraphQL */ `
         bucket
         key
         region
+        identityId
       }
       owner
     }
@@ -163,16 +155,11 @@ export const onDeleteVisualisation = /* GraphQL */ `
       }
       config {
         id
-        visualisation {
-          id
-          title
-          description
-          owner
-        }
         file {
           bucket
           key
           region
+          identityId
         }
         owner
       }
@@ -188,6 +175,7 @@ export const onDeleteVisualisation = /* GraphQL */ `
         bucket
         key
         region
+        identityId
       }
       owner
     }
@@ -197,33 +185,11 @@ export const onCreateConfig = /* GraphQL */ `
   subscription OnCreateConfig($owner: String) {
     onCreateConfig(owner: $owner) {
       id
-      visualisation {
-        id
-        title
-        description
-        user {
-          id
-          username
-          owner
-        }
-        config {
-          id
-          owner
-        }
-        datasets {
-          nextToken
-        }
-        image {
-          bucket
-          key
-          region
-        }
-        owner
-      }
       file {
         bucket
         key
         region
+        identityId
       }
       owner
     }
@@ -233,33 +199,11 @@ export const onUpdateConfig = /* GraphQL */ `
   subscription OnUpdateConfig($owner: String) {
     onUpdateConfig(owner: $owner) {
       id
-      visualisation {
-        id
-        title
-        description
-        user {
-          id
-          username
-          owner
-        }
-        config {
-          id
-          owner
-        }
-        datasets {
-          nextToken
-        }
-        image {
-          bucket
-          key
-          region
-        }
-        owner
-      }
       file {
         bucket
         key
         region
+        identityId
       }
       owner
     }
@@ -269,33 +213,11 @@ export const onDeleteConfig = /* GraphQL */ `
   subscription OnDeleteConfig($owner: String) {
     onDeleteConfig(owner: $owner) {
       id
-      visualisation {
-        id
-        title
-        description
-        user {
-          id
-          username
-          owner
-        }
-        config {
-          id
-          owner
-        }
-        datasets {
-          nextToken
-        }
-        image {
-          bucket
-          key
-          region
-        }
-        owner
-      }
       file {
         bucket
         key
         region
+        identityId
       }
       owner
     }
@@ -325,6 +247,7 @@ export const onCreateDataset = /* GraphQL */ `
           bucket
           key
           region
+          identityId
         }
         owner
       }
@@ -333,6 +256,7 @@ export const onCreateDataset = /* GraphQL */ `
         bucket
         key
         region
+        identityId
       }
       owner
     }
@@ -362,6 +286,7 @@ export const onUpdateDataset = /* GraphQL */ `
           bucket
           key
           region
+          identityId
         }
         owner
       }
@@ -370,6 +295,7 @@ export const onUpdateDataset = /* GraphQL */ `
         bucket
         key
         region
+        identityId
       }
       owner
     }
@@ -399,6 +325,7 @@ export const onDeleteDataset = /* GraphQL */ `
           bucket
           key
           region
+          identityId
         }
         owner
       }
@@ -407,6 +334,7 @@ export const onDeleteDataset = /* GraphQL */ `
         bucket
         key
         region
+        identityId
       }
       owner
     }

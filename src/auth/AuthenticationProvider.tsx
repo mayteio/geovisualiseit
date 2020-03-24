@@ -5,19 +5,9 @@ import { HubCapsule } from "@aws-amplify/core/lib-esm/Hub";
 import { CognitoUser } from "amazon-cognito-identity-js";
 import { SignupDialog } from "./SignupDialog";
 
-const AuthentiationContext = React.createContext<
-  | {
-      signIn: AuthClass["signIn"];
-      signUp: AuthClass["signUp"];
-      resendSignUp: AuthClass["resendSignUp"];
-      confirmSignUp: AuthClass["confirmSignUp"];
-      signOut: AuthClass["signOut"];
-      forgotPassword: AuthClass["forgotPassword"];
-      changePassword: AuthClass["changePassword"];
-      completeNewPassword: AuthClass["completeNewPassword"];
-    }
-  | undefined
->(undefined);
+const AuthentiationContext = React.createContext<AuthClass | undefined>(
+  undefined
+);
 const UserContext = React.createContext<CognitoUser | undefined>(undefined);
 
 /**

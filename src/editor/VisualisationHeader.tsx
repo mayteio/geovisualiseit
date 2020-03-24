@@ -13,25 +13,31 @@ export const VisualisationHeader = () => {
     <Box display="flex" p={2} bgcolor="background.default">
       <Box flexGrow={1}>
         <Typography variant="h6">{visualisation?.title}</Typography>
+        <Typography variant="body2">
+          by {visualisation?.user.username}
+        </Typography>
       </Box>
-      <Button
-        onClick={() => history.push(`/v/${visualisation?.id}/edit`)}
-        size="small"
-      >
-        Share
-      </Button>
-      {//
-      // @ts-ignore
-      user?.attributes.sub === visualisation?.user?.id ? (
+
+      <Box display="flex" alignItems="flex-end">
         <Button
           onClick={() => history.push(`/v/${visualisation?.id}/edit`)}
           size="small"
         >
-          Edit
+          Share
         </Button>
-      ) : (
-        <Button size="small">Fork</Button>
-      )}
+        {//
+        // @ts-ignore
+        user?.attributes.sub === visualisation?.user?.id ? (
+          <Button
+            onClick={() => history.push(`/v/${visualisation?.id}/edit`)}
+            size="small"
+          >
+            Edit
+          </Button>
+        ) : (
+          <Button size="small">Fork</Button>
+        )}
+      </Box>
     </Box>
   );
 };

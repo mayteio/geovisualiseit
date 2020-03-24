@@ -1,6 +1,6 @@
 # geovisualise.it
 
-An open- [ ]source, data visualisation sharing platform
+An open-source, data visualisation sharing platform
 
 ## housekeeping
 
@@ -20,7 +20,7 @@ An open- [ ]source, data visualisation sharing platform
   - [x] create profile on signup (tap into postConfirmationLambdaTrigger, create profile with ID of cognito:sub)
   - [ ] create UI for visualisations created by a given user & pull in vis's
 - [ ] View visualisation screen
-  - [ ] grab data from server
+  - [x] grab data from server
   - [ ] hydrate from route state when creating a new vis
 - [ ] Edit visualisation
   - [ ] way to check if dataset has changed? just upload a new dataset every time?

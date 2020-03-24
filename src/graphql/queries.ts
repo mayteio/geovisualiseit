@@ -54,16 +54,11 @@ export const getVisualisation = /* GraphQL */ `
       }
       config {
         id
-        visualisation {
-          id
-          title
-          description
-          owner
-        }
         file {
           bucket
           key
           region
+          identityId
         }
         owner
       }
@@ -79,6 +74,7 @@ export const getVisualisation = /* GraphQL */ `
         bucket
         key
         region
+        identityId
       }
       owner
     }
@@ -111,6 +107,7 @@ export const listVisualisations = /* GraphQL */ `
           bucket
           key
           region
+          identityId
         }
         owner
       }
@@ -122,33 +119,11 @@ export const getConfig = /* GraphQL */ `
   query GetConfig($id: ID!) {
     getConfig(id: $id) {
       id
-      visualisation {
-        id
-        title
-        description
-        user {
-          id
-          username
-          owner
-        }
-        config {
-          id
-          owner
-        }
-        datasets {
-          nextToken
-        }
-        image {
-          bucket
-          key
-          region
-        }
-        owner
-      }
       file {
         bucket
         key
         region
+        identityId
       }
       owner
     }
@@ -163,16 +138,11 @@ export const listConfigs = /* GraphQL */ `
     listConfigs(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        visualisation {
-          id
-          title
-          description
-          owner
-        }
         file {
           bucket
           key
           region
+          identityId
         }
         owner
       }
@@ -204,6 +174,7 @@ export const getDataset = /* GraphQL */ `
           bucket
           key
           region
+          identityId
         }
         owner
       }
@@ -212,6 +183,7 @@ export const getDataset = /* GraphQL */ `
         bucket
         key
         region
+        identityId
       }
       owner
     }
@@ -237,6 +209,7 @@ export const listDatasets = /* GraphQL */ `
           bucket
           key
           region
+          identityId
         }
         owner
       }

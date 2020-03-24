@@ -8,6 +8,8 @@
 # testing
 /coverage
 
+resolvers
+
 # production
 /build
 

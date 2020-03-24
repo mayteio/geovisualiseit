@@ -4,19 +4,17 @@ import { Box } from "@material-ui/core";
 import useMeasure from "react-use-measure";
 import { DetailsForm } from "./DetailsForm";
 
-import { injectComponents, PanelHeaderFactory } from "kepler.gl/components";
-import { convertToPng } from "kepler.gl/dist/utils/export-image-utils";
-import { keplerTheme } from "../common/themes";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../Store";
-
 import {
-  startExportingImage,
-  cleanupExportImage,
-  setExportImageDataUri
-} from "kepler.gl/actions";
+  injectComponents,
+  PanelHeaderFactory,
+  PlotContainerFactory
+} from "kepler.gl/components";
+import { CustomPlotContainerFactory } from "./PlotContainerFactory";
 
-const KeplerGl = injectComponents([[PanelHeaderFactory, () => DetailsForm]]);
+const KeplerGl = injectComponents([
+  [PanelHeaderFactory, () => DetailsForm],
+  [PlotContainerFactory, CustomPlotContainerFactory]
+]);
 
 export const Editor = () => {
   const [ref, { width, height }] = useMeasure();
@@ -31,51 +29,16 @@ export const Editor = () => {
           // @ts-ignore
           ref={ref}
         >
-          <ScreenshotContainer>
-            <KeplerGl
-              id="editor"
-              mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_API_ACCESS_KEY}
-              width={width}
-              height={height}
-            />
-          </ScreenshotContainer>
+          <KeplerGl
+            id="editor"
+            mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_API_ACCESS_KEY}
+            width={width}
+            height={height}
+            uiState={{}}
+            mint
+          />
         </Box>
       </Box>
     </>
-  );
-};
-
-export const ScreenshotContainer: React.FC = ({ children }) => {
-  // @ts-ignore
-  const { editorDialogOpen } = useSelector<RootState>(s => s.app);
-  const dispatch = useDispatch();
-
-  React.useEffect(() => {
-    if (editorDialogOpen) {
-      dispatch(startExportingImage());
-      const filter = (node: any) =>
-        !(
-          node.classList &&
-          node.classList.contains("mapboxgl-control-container")
-        );
-      convertToPng(screenshotRef.current, { filter }).then((dataUri: any) => {
-        dispatch(setExportImageDataUri(dataUri));
-      });
-    } else {
-      dispatch(cleanupExportImage());
-    }
-  }, [editorDialogOpen, dispatch]);
-
-  const screenshotRef = React.useRef();
-
-  return (
-    <Box
-      width={1}
-      height={1}
-      // @ts-ignore
-      ref={screenshotRef}
-    >
-      {children}
-    </Box>
   );
 };

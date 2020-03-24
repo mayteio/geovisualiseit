@@ -25,9 +25,9 @@ type Visualisation
   title: String!
   description: String
   user: User @connection(name: "UserVisualisations")
-  config: Config @connection(name: "VisualisationConfig")
   datasets: [Dataset] @connection(name: "VisualisationDatasets")
   image: S3Object
+  config: Config @connection
 
   # future features
   # password: String
@@ -46,7 +46,6 @@ type Config
     ]
   ) {
   id: ID!
-  visualisation: Visualisation @connection(name: "VisualisationConfig")
   file: S3Object!
 }
 
@@ -74,6 +73,7 @@ type S3Object {
   bucket: String
   key: String
   region: String
+  identityId: ID
 }
 
 # Unsure how to do many to many with tags

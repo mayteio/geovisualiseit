@@ -74,8 +74,9 @@ export type CreateVisualisationInput = {
 
 export type S3ObjectInput = {
   bucket?: string | null,
-  key?: string | null,
+  key: string,
   region?: string | null,
+  identityId: string,
 };
 
 export type ModelVisualisationConditionInput = {
@@ -102,7 +103,6 @@ export type DeleteVisualisationInput = {
 export type CreateConfigInput = {
   id?: string | null,
   file: S3ObjectInput,
-  configVisualisationId?: string | null,
 };
 
 export type ModelConfigConditionInput = {
@@ -114,7 +114,6 @@ export type ModelConfigConditionInput = {
 export type UpdateConfigInput = {
   id: string,
   file?: S3ObjectInput | null,
-  configVisualisationId?: string | null,
 };
 
 export type DeleteConfigInput = {
@@ -293,18 +292,12 @@ export type CreateVisualisationMutation = {
     config:  {
       __typename: "Config",
       id: string,
-      visualisation:  {
-        __typename: "Visualisation",
-        id: string,
-        title: string,
-        description: string | null,
-        owner: string | null,
-      } | null,
       file:  {
         __typename: "S3Object",
         bucket: string | null,
-        key: string | null,
+        key: string,
         region: string | null,
+        identityId: string,
       },
       owner: string | null,
     } | null,
@@ -321,8 +314,9 @@ export type CreateVisualisationMutation = {
     image:  {
       __typename: "S3Object",
       bucket: string | null,
-      key: string | null,
+      key: string,
       region: string | null,
+      identityId: string,
     } | null,
     owner: string | null,
   } | null,
@@ -352,18 +346,12 @@ export type UpdateVisualisationMutation = {
     config:  {
       __typename: "Config",
       id: string,
-      visualisation:  {
-        __typename: "Visualisation",
-        id: string,
-        title: string,
-        description: string | null,
-        owner: string | null,
-      } | null,
       file:  {
         __typename: "S3Object",
         bucket: string | null,
-        key: string | null,
+        key: string,
         region: string | null,
+        identityId: string,
       },
       owner: string | null,
     } | null,
@@ -380,8 +368,9 @@ export type UpdateVisualisationMutation = {
     image:  {
       __typename: "S3Object",
       bucket: string | null,
-      key: string | null,
+      key: string,
       region: string | null,
+      identityId: string,
     } | null,
     owner: string | null,
   } | null,
@@ -411,18 +400,12 @@ export type DeleteVisualisationMutation = {
     config:  {
       __typename: "Config",
       id: string,
-      visualisation:  {
-        __typename: "Visualisation",
-        id: string,
-        title: string,
-        description: string | null,
-        owner: string | null,
-      } | null,
       file:  {
         __typename: "S3Object",
         bucket: string | null,
-        key: string | null,
+        key: string,
         region: string | null,
+        identityId: string,
       },
       owner: string | null,
     } | null,
@@ -439,8 +422,9 @@ export type DeleteVisualisationMutation = {
     image:  {
       __typename: "S3Object",
       bucket: string | null,
-      key: string | null,
+      key: string,
       region: string | null,
+      identityId: string,
     } | null,
     owner: string | null,
   } | null,
@@ -455,39 +439,12 @@ export type CreateConfigMutation = {
   createConfig:  {
     __typename: "Config",
     id: string,
-    visualisation:  {
-      __typename: "Visualisation",
-      id: string,
-      title: string,
-      description: string | null,
-      user:  {
-        __typename: "User",
-        id: string,
-        username: string,
-        owner: string | null,
-      } | null,
-      config:  {
-        __typename: "Config",
-        id: string,
-        owner: string | null,
-      } | null,
-      datasets:  {
-        __typename: "ModelDatasetConnection",
-        nextToken: string | null,
-      } | null,
-      image:  {
-        __typename: "S3Object",
-        bucket: string | null,
-        key: string | null,
-        region: string | null,
-      } | null,
-      owner: string | null,
-    } | null,
     file:  {
       __typename: "S3Object",
       bucket: string | null,
-      key: string | null,
+      key: string,
       region: string | null,
+      identityId: string,
     },
     owner: string | null,
   } | null,
@@ -502,39 +459,12 @@ export type UpdateConfigMutation = {
   updateConfig:  {
     __typename: "Config",
     id: string,
-    visualisation:  {
-      __typename: "Visualisation",
-      id: string,
-      title: string,
-      description: string | null,
-      user:  {
-        __typename: "User",
-        id: string,
-        username: string,
-        owner: string | null,
-      } | null,
-      config:  {
-        __typename: "Config",
-        id: string,
-        owner: string | null,
-      } | null,
-      datasets:  {
-        __typename: "ModelDatasetConnection",
-        nextToken: string | null,
-      } | null,
-      image:  {
-        __typename: "S3Object",
-        bucket: string | null,
-        key: string | null,
-        region: string | null,
-      } | null,
-      owner: string | null,
-    } | null,
     file:  {
       __typename: "S3Object",
       bucket: string | null,
-      key: string | null,
+      key: string,
       region: string | null,
+      identityId: string,
     },
     owner: string | null,
   } | null,
@@ -549,39 +479,12 @@ export type DeleteConfigMutation = {
   deleteConfig:  {
     __typename: "Config",
     id: string,
-    visualisation:  {
-      __typename: "Visualisation",
-      id: string,
-      title: string,
-      description: string | null,
-      user:  {
-        __typename: "User",
-        id: string,
-        username: string,
-        owner: string | null,
-      } | null,
-      config:  {
-        __typename: "Config",
-        id: string,
-        owner: string | null,
-      } | null,
-      datasets:  {
-        __typename: "ModelDatasetConnection",
-        nextToken: string | null,
-      } | null,
-      image:  {
-        __typename: "S3Object",
-        bucket: string | null,
-        key: string | null,
-        region: string | null,
-      } | null,
-      owner: string | null,
-    } | null,
     file:  {
       __typename: "S3Object",
       bucket: string | null,
-      key: string | null,
+      key: string,
       region: string | null,
+      identityId: string,
     },
     owner: string | null,
   } | null,
@@ -619,8 +522,9 @@ export type CreateDatasetMutation = {
       image:  {
         __typename: "S3Object",
         bucket: string | null,
-        key: string | null,
+        key: string,
         region: string | null,
+        identityId: string,
       } | null,
       owner: string | null,
     } | null,
@@ -628,8 +532,9 @@ export type CreateDatasetMutation = {
     file:  {
       __typename: "S3Object",
       bucket: string | null,
-      key: string | null,
+      key: string,
       region: string | null,
+      identityId: string,
     },
     owner: string | null,
   } | null,
@@ -667,8 +572,9 @@ export type UpdateDatasetMutation = {
       image:  {
         __typename: "S3Object",
         bucket: string | null,
-        key: string | null,
+        key: string,
         region: string | null,
+        identityId: string,
       } | null,
       owner: string | null,
     } | null,
@@ -676,8 +582,9 @@ export type UpdateDatasetMutation = {
     file:  {
       __typename: "S3Object",
       bucket: string | null,
-      key: string | null,
+      key: string,
       region: string | null,
+      identityId: string,
     },
     owner: string | null,
   } | null,
@@ -715,8 +622,9 @@ export type DeleteDatasetMutation = {
       image:  {
         __typename: "S3Object",
         bucket: string | null,
-        key: string | null,
+        key: string,
         region: string | null,
+        identityId: string,
       } | null,
       owner: string | null,
     } | null,
@@ -724,8 +632,9 @@ export type DeleteDatasetMutation = {
     file:  {
       __typename: "S3Object",
       bucket: string | null,
-      key: string | null,
+      key: string,
       region: string | null,
+      identityId: string,
     },
     owner: string | null,
   } | null,
@@ -801,18 +710,12 @@ export type GetVisualisationQuery = {
     config:  {
       __typename: "Config",
       id: string,
-      visualisation:  {
-        __typename: "Visualisation",
-        id: string,
-        title: string,
-        description: string | null,
-        owner: string | null,
-      } | null,
       file:  {
         __typename: "S3Object",
         bucket: string | null,
-        key: string | null,
+        key: string,
         region: string | null,
+        identityId: string,
       },
       owner: string | null,
     } | null,
@@ -829,8 +732,9 @@ export type GetVisualisationQuery = {
     image:  {
       __typename: "S3Object",
       bucket: string | null,
-      key: string | null,
+      key: string,
       region: string | null,
+      identityId: string,
     } | null,
     owner: string | null,
   } | null,
@@ -868,8 +772,9 @@ export type ListVisualisationsQuery = {
       image:  {
         __typename: "S3Object",
         bucket: string | null,
-        key: string | null,
+        key: string,
         region: string | null,
+        identityId: string,
       } | null,
       owner: string | null,
     } | null > | null,
@@ -885,39 +790,12 @@ export type GetConfigQuery = {
   getConfig:  {
     __typename: "Config",
     id: string,
-    visualisation:  {
-      __typename: "Visualisation",
-      id: string,
-      title: string,
-      description: string | null,
-      user:  {
-        __typename: "User",
-        id: string,
-        username: string,
-        owner: string | null,
-      } | null,
-      config:  {
-        __typename: "Config",
-        id: string,
-        owner: string | null,
-      } | null,
-      datasets:  {
-        __typename: "ModelDatasetConnection",
-        nextToken: string | null,
-      } | null,
-      image:  {
-        __typename: "S3Object",
-        bucket: string | null,
-        key: string | null,
-        region: string | null,
-      } | null,
-      owner: string | null,
-    } | null,
     file:  {
       __typename: "S3Object",
       bucket: string | null,
-      key: string | null,
+      key: string,
       region: string | null,
+      identityId: string,
     },
     owner: string | null,
   } | null,
@@ -935,18 +813,12 @@ export type ListConfigsQuery = {
     items:  Array< {
       __typename: "Config",
       id: string,
-      visualisation:  {
-        __typename: "Visualisation",
-        id: string,
-        title: string,
-        description: string | null,
-        owner: string | null,
-      } | null,
       file:  {
         __typename: "S3Object",
         bucket: string | null,
-        key: string | null,
+        key: string,
         region: string | null,
+        identityId: string,
       },
       owner: string | null,
     } | null > | null,
@@ -985,8 +857,9 @@ export type GetDatasetQuery = {
       image:  {
         __typename: "S3Object",
         bucket: string | null,
-        key: string | null,
+        key: string,
         region: string | null,
+        identityId: string,
       } | null,
       owner: string | null,
     } | null,
@@ -994,8 +867,9 @@ export type GetDatasetQuery = {
     file:  {
       __typename: "S3Object",
       bucket: string | null,
-      key: string | null,
+      key: string,
       region: string | null,
+      identityId: string,
     },
     owner: string | null,
   } | null,
@@ -1024,8 +898,9 @@ export type ListDatasetsQuery = {
       file:  {
         __typename: "S3Object",
         bucket: string | null,
-        key: string | null,
+        key: string,
         region: string | null,
+        identityId: string,
       },
       owner: string | null,
     } | null > | null,
@@ -1128,18 +1003,12 @@ export type OnCreateVisualisationSubscription = {
     config:  {
       __typename: "Config",
       id: string,
-      visualisation:  {
-        __typename: "Visualisation",
-        id: string,
-        title: string,
-        description: string | null,
-        owner: string | null,
-      } | null,
       file:  {
         __typename: "S3Object",
         bucket: string | null,
-        key: string | null,
+        key: string,
         region: string | null,
+        identityId: string,
       },
       owner: string | null,
     } | null,
@@ -1156,8 +1025,9 @@ export type OnCreateVisualisationSubscription = {
     image:  {
       __typename: "S3Object",
       bucket: string | null,
-      key: string | null,
+      key: string,
       region: string | null,
+      identityId: string,
     } | null,
     owner: string | null,
   } | null,
@@ -1186,18 +1056,12 @@ export type OnUpdateVisualisationSubscription = {
     config:  {
       __typename: "Config",
       id: string,
-      visualisation:  {
-        __typename: "Visualisation",
-        id: string,
-        title: string,
-        description: string | null,
-        owner: string | null,
-      } | null,
       file:  {
         __typename: "S3Object",
         bucket: string | null,
-        key: string | null,
+        key: string,
         region: string | null,
+        identityId: string,
       },
       owner: string | null,
     } | null,
@@ -1214,8 +1078,9 @@ export type OnUpdateVisualisationSubscription = {
     image:  {
       __typename: "S3Object",
       bucket: string | null,
-      key: string | null,
+      key: string,
       region: string | null,
+      identityId: string,
     } | null,
     owner: string | null,
   } | null,
@@ -1244,18 +1109,12 @@ export type OnDeleteVisualisationSubscription = {
     config:  {
       __typename: "Config",
       id: string,
-      visualisation:  {
-        __typename: "Visualisation",
-        id: string,
-        title: string,
-        description: string | null,
-        owner: string | null,
-      } | null,
       file:  {
         __typename: "S3Object",
         bucket: string | null,
-        key: string | null,
+        key: string,
         region: string | null,
+        identityId: string,
       },
       owner: string | null,
     } | null,
@@ -1272,8 +1131,9 @@ export type OnDeleteVisualisationSubscription = {
     image:  {
       __typename: "S3Object",
       bucket: string | null,
-      key: string | null,
+      key: string,
       region: string | null,
+      identityId: string,
     } | null,
     owner: string | null,
   } | null,
@@ -1287,39 +1147,12 @@ export type OnCreateConfigSubscription = {
   onCreateConfig:  {
     __typename: "Config",
     id: string,
-    visualisation:  {
-      __typename: "Visualisation",
-      id: string,
-      title: string,
-      description: string | null,
-      user:  {
-        __typename: "User",
-        id: string,
-        username: string,
-        owner: string | null,
-      } | null,
-      config:  {
-        __typename: "Config",
-        id: string,
-        owner: string | null,
-      } | null,
-      datasets:  {
-        __typename: "ModelDatasetConnection",
-        nextToken: string | null,
-      } | null,
-      image:  {
-        __typename: "S3Object",
-        bucket: string | null,
-        key: string | null,
-        region: string | null,
-      } | null,
-      owner: string | null,
-    } | null,
     file:  {
       __typename: "S3Object",
       bucket: string | null,
-      key: string | null,
+      key: string,
       region: string | null,
+      identityId: string,
     },
     owner: string | null,
   } | null,
@@ -1333,39 +1166,12 @@ export type OnUpdateConfigSubscription = {
   onUpdateConfig:  {
     __typename: "Config",
     id: string,
-    visualisation:  {
-      __typename: "Visualisation",
-      id: string,
-      title: string,
-      description: string | null,
-      user:  {
-        __typename: "User",
-        id: string,
-        username: string,
-        owner: string | null,
-      } | null,
-      config:  {
-        __typename: "Config",
-        id: string,
-        owner: string | null,
-      } | null,
-      datasets:  {
-        __typename: "ModelDatasetConnection",
-        nextToken: string | null,
-      } | null,
-      image:  {
-        __typename: "S3Object",
-        bucket: string | null,
-        key: string | null,
-        region: string | null,
-      } | null,
-      owner: string | null,
-    } | null,
     file:  {
       __typename: "S3Object",
       bucket: string | null,
-      key: string | null,
+      key: string,
       region: string | null,
+      identityId: string,
     },
     owner: string | null,
   } | null,
@@ -1379,39 +1185,12 @@ export type OnDeleteConfigSubscription = {
   onDeleteConfig:  {
     __typename: "Config",
     id: string,
-    visualisation:  {
-      __typename: "Visualisation",
-      id: string,
-      title: string,
-      description: string | null,
-      user:  {
-        __typename: "User",
-        id: string,
-        username: string,
-        owner: string | null,
-      } | null,
-      config:  {
-        __typename: "Config",
-        id: string,
-        owner: string | null,
-      } | null,
-      datasets:  {
-        __typename: "ModelDatasetConnection",
-        nextToken: string | null,
-      } | null,
-      image:  {
-        __typename: "S3Object",
-        bucket: string | null,
-        key: string | null,
-        region: string | null,
-      } | null,
-      owner: string | null,
-    } | null,
     file:  {
       __typename: "S3Object",
       bucket: string | null,
-      key: string | null,
+      key: string,
       region: string | null,
+      identityId: string,
     },
     owner: string | null,
   } | null,
@@ -1448,8 +1227,9 @@ export type OnCreateDatasetSubscription = {
       image:  {
         __typename: "S3Object",
         bucket: string | null,
-        key: string | null,
+        key: string,
         region: string | null,
+        identityId: string,
       } | null,
       owner: string | null,
     } | null,
@@ -1457,8 +1237,9 @@ export type OnCreateDatasetSubscription = {
     file:  {
       __typename: "S3Object",
       bucket: string | null,
-      key: string | null,
+      key: string,
       region: string | null,
+      identityId: string,
     },
     owner: string | null,
   } | null,
@@ -1495,8 +1276,9 @@ export type OnUpdateDatasetSubscription = {
       image:  {
         __typename: "S3Object",
         bucket: string | null,
-        key: string | null,
+        key: string,
         region: string | null,
+        identityId: string,
       } | null,
       owner: string | null,
     } | null,
@@ -1504,8 +1286,9 @@ export type OnUpdateDatasetSubscription = {
     file:  {
       __typename: "S3Object",
       bucket: string | null,
-      key: string | null,
+      key: string,
       region: string | null,
+      identityId: string,
     },
     owner: string | null,
   } | null,
@@ -1542,8 +1325,9 @@ export type OnDeleteDatasetSubscription = {
       image:  {
         __typename: "S3Object",
         bucket: string | null,
-        key: string | null,
+        key: string,
         region: string | null,
+        identityId: string,
       } | null,
       owner: string | null,
     } | null,
@@ -1551,8 +1335,9 @@ export type OnDeleteDatasetSubscription = {
     file:  {
       __typename: "S3Object",
       bucket: string | null,
-      key: string | null,
+      key: string,
       region: string | null,
+      identityId: string,
     },
     owner: string | null,
   } | null,

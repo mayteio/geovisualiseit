@@ -1,9 +1,16 @@
-import React from 'react';
-import { AppBar, Box, Button, Toolbar, Typography, useTheme } from '@material-ui/core';
-import { Link } from 'react-router-dom';
-import { LoginButtonAndForm } from '../auth/LoginButtonAndForm';
-import { LogoutButton } from '../auth/LogoutButton';
-import { useUser } from '../auth/AuthenticationProvider';
+import React from "react";
+import {
+  AppBar,
+  Box,
+  Button,
+  Toolbar,
+  Typography,
+  useTheme
+} from "@material-ui/core";
+import { Link } from "react-router-dom";
+import { LoginButtonAndForm } from "../auth/LoginButtonAndForm";
+import { LogoutButton } from "../auth/LogoutButton";
+import { useUser } from "../auth/AuthenticationProvider";
 
 export const Header = () => {
   const user = useUser();
@@ -29,7 +36,7 @@ export const Header = () => {
               <Button component={Link} to="/v/new">
                 Create
               </Button>
-              <Button component={Link} to="/me">
+              <Button component={Link} to="/u/me">
                 My visualisations
               </Button>
               <LogoutButton />

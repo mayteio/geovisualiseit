@@ -1,6 +1,6 @@
 projects:
   geovisualiseit:
-    schemaPath: src/graphql/schema.json
+    schemaPath: amplify/backend/api/geovisualiseit/build/schema.graphql
     includes:
       - src/graphql/**/*.ts
     excludes:

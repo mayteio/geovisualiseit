@@ -83,16 +83,11 @@ export const createVisualisation = /* GraphQL */ `
       }
       config {
         id
-        visualisation {
-          id
-          title
-          description
-          owner
-        }
         file {
           bucket
           key
           region
+          identityId
         }
         owner
       }
@@ -108,6 +103,7 @@ export const createVisualisation = /* GraphQL */ `
         bucket
         key
         region
+        identityId
       }
       owner
     }
@@ -132,16 +128,11 @@ export const updateVisualisation = /* GraphQL */ `
       }
       config {
         id
-        visualisation {
-          id
-          title
-          description
-          owner
-        }
         file {
           bucket
           key
           region
+          identityId
         }
         owner
       }
@@ -157,6 +148,7 @@ export const updateVisualisation = /* GraphQL */ `
         bucket
         key
         region
+        identityId
       }
       owner
     }
@@ -181,16 +173,11 @@ export const deleteVisualisation = /* GraphQL */ `
       }
       config {
         id
-        visualisation {
-          id
-          title
-          description
-          owner
-        }
         file {
           bucket
           key
           region
+          identityId
         }
         owner
       }
@@ -206,6 +193,7 @@ export const deleteVisualisation = /* GraphQL */ `
         bucket
         key
         region
+        identityId
       }
       owner
     }
@@ -218,33 +206,11 @@ export const createConfig = /* GraphQL */ `
   ) {
     createConfig(input: $input, condition: $condition) {
       id
-      visualisation {
-        id
-        title
-        description
-        user {
-          id
-          username
-          owner
-        }
-        config {
-          id
-          owner
-        }
-        datasets {
-          nextToken
-        }
-        image {
-          bucket
-          key
-          region
-        }
-        owner
-      }
       file {
         bucket
         key
         region
+        identityId
       }
       owner
     }
@@ -257,33 +223,11 @@ export const updateConfig = /* GraphQL */ `
   ) {
     updateConfig(input: $input, condition: $condition) {
       id
-      visualisation {
-        id
-        title
-        description
-        user {
-          id
-          username
-          owner
-        }
-        config {
-          id
-          owner
-        }
-        datasets {
-          nextToken
-        }
-        image {
-          bucket
-          key
-          region
-        }
-        owner
-      }
       file {
         bucket
         key
         region
+        identityId
       }
       owner
     }
@@ -296,33 +240,11 @@ export const deleteConfig = /* GraphQL */ `
   ) {
     deleteConfig(input: $input, condition: $condition) {
       id
-      visualisation {
-        id
-        title
-        description
-        user {
-          id
-          username
-          owner
-        }
-        config {
-          id
-          owner
-        }
-        datasets {
-          nextToken
-        }
-        image {
-          bucket
-          key
-          region
-        }
-        owner
-      }
       file {
         bucket
         key
         region
+        identityId
       }
       owner
     }
@@ -355,6 +277,7 @@ export const createDataset = /* GraphQL */ `
           bucket
           key
           region
+          identityId
         }
         owner
       }
@@ -363,6 +286,7 @@ export const createDataset = /* GraphQL */ `
         bucket
         key
         region
+        identityId
       }
       owner
     }
@@ -395,6 +319,7 @@ export const updateDataset = /* GraphQL */ `
           bucket
           key
           region
+          identityId
         }
         owner
       }
@@ -403,6 +328,7 @@ export const updateDataset = /* GraphQL */ `
         bucket
         key
         region
+        identityId
       }
       owner
     }
@@ -435,6 +361,7 @@ export const deleteDataset = /* GraphQL */ `
           bucket
           key
           region
+          identityId
         }
         owner
       }
@@ -443,6 +370,7 @@ export const deleteDataset = /* GraphQL */ `
         bucket
         key
         region
+        identityId
       }
       owner
     }

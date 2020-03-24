@@ -18,9 +18,13 @@ import Storage from "@aws-amplify/storage";
 import styled from "styled-components";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { useUser } from "../auth/AuthenticationProvider";
+import { useUser, useAuth } from "../auth/AuthenticationProvider";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoginOpen, setEditorOpen } from "../common/appState";
+import {
+  setLoginOpen,
+  setEditorOpen,
+  setVisualisation
+} from "../common/appState";
 import { useSnackbar } from "notistack";
 import CloseIcon from "@material-ui/icons/CloseRounded";
 import uuid from "uuid/v4";
@@ -28,6 +32,7 @@ import slugify from "slugify";
 import config from "../aws-exports";
 
 import KeplerGlSchema from "kepler.gl/schemas";
+import { cleanupExportImage } from "kepler.gl/actions";
 import { RootState } from "../Store";
 import { useMutation } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
@@ -68,6 +73,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export const DetailsForm = () => {
   const user = useUser();
+  const auth = useAuth();
+
   const dispatch = useDispatch();
   // @ts-ignore
   const { editorDialogOpen } = useSelector<RootState>(s => s.app);
@@ -126,12 +133,10 @@ export const DetailsForm = () => {
       onSubmit={async ({ name, description, isPublic }, { setSubmitting }) => {
         try {
           setSubmitting(true);
+          console.log(exportImage);
 
           const dataToSave = KeplerGlSchema.getDatasetToSave(keplerState);
           const configToSave = KeplerGlSchema.getConfigToSave(keplerState);
-          const blobToSave = new Blob([exportImage.dataUri], {
-            type: "image/png"
-          });
 
           // push all the files to amplify
           const [image, config, ...datasets] = await Promise.all([
@@ -139,9 +144,11 @@ export const DetailsForm = () => {
               `images/${slugify(name, {
                 lower: true
               })}-thumbnail-${uuid()}.png`,
-              blobToSave,
+              new Blob([exportImage.imageDataUri], {
+                type: "image/png"
+              }),
               {
-                // level: "protected",
+                level: "protected",
                 contentType: "image/png"
               }
             ),
@@ -149,23 +156,38 @@ export const DetailsForm = () => {
               `configs/${slugify(name, {
                 lower: true
               })}-config-${uuid()}.json`,
-              JSON.stringify(configToSave),
+              new Blob([JSON.stringify(configToSave)]),
               {
-                // level: "protected",
-                contentType: "application/json"
+                level: "protected"
               }
             ),
             ...dataToSave.map((dataset: any) =>
               Storage.put(
                 `datasets/${dataset.data.label}-kepler-dataset-${uuid()}.json`,
-                JSON.stringify(dataset),
+                new Blob([JSON.stringify(dataset)]),
                 {
-                  // level: "protected",
-                  contentType: "application/json"
+                  level: "protected"
+                  // contentType: "application/json"/
                 }
               )
             )
           ]);
+
+          // we get the identityId because S3 uses this in the upload prefix. So bizzare.
+          // https://github.com/aws-amplify/amplify-js/issues/1787
+          // https://github.com/aws-amplify/amplify-js/issues/54
+          // https://stackoverflow.com/questions/42386180/aws-lambda-api-gateway-with-cognito-how-to-use-identityid-to-access-and-update
+          const { identityId } = await auth.currentUserCredentials();
+
+          // then we create the config and pass in the vis ID
+          // const createConfigMutation =
+          const configResult = await createConfig({
+            variables: {
+              input: {
+                file: { ...config, region, bucket, identityId }
+              }
+            }
+          });
 
           // first we create the visualisation
           const visualisationResult = await createVisualisation({
@@ -173,21 +195,10 @@ export const DetailsForm = () => {
               input: {
                 title: name,
                 description,
-                image: { ...image, region, bucket },
+                image: { ...image, region, bucket, identityId },
+                visualisationConfigId: configResult.data?.createConfig?.id,
                 // @ts-ignore
                 visualisationUserId: user?.attributes?.sub
-              }
-            }
-          });
-
-          // then we create the config and pass in the vis ID
-          // const createConfigMutation =
-          await createConfig({
-            variables: {
-              input: {
-                file: { ...config, region, bucket },
-                configVisualisationId:
-                  visualisationResult.data?.createVisualisation.id
               }
             }
           });
@@ -202,7 +213,7 @@ export const DetailsForm = () => {
                     datasetVisualisationId:
                       visualisationResult.data?.createVisualisation.id,
                     title: dataToSave[index].data.label,
-                    file: { ...s3Object, region, bucket }
+                    file: { ...s3Object, region, bucket, identityId }
                   }
                 }
               })
@@ -216,9 +227,14 @@ export const DetailsForm = () => {
           // ]);
 
           // Then we're done!
+          dispatch(
+            setVisualisation(visualisationResult?.data?.createVisualisation)
+          );
+          dispatch(cleanupExportImage());
           enqueueSnackbar("Visualisation saved!", { variant: "success" });
           history.push(
-            `/v/${visualisationResult.data?.createVisualisation.id}/share`
+            `/v/${visualisationResult.data?.createVisualisation.id}/share`,
+            { data: dataToSave, config: configToSave }
           );
         } catch (error) {
           console.log("error creating vis", error);
@@ -365,6 +381,10 @@ const createVisualisationTag = gql`
     createVisualisation(input: $input) {
       title
       id
+      description
+      user {
+        username
+      }
     }
   }
 `;
